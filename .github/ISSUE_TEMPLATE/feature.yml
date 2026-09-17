@@ -1,0 +1,23 @@
+name: Capacidad
+description: Proponer una capacidad vinculada a una hipótesis del MVP
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema o hipótesis
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Resultado observable
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+    validations:
+      required: true

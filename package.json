@@ -1,0 +1,29 @@
+{
+  "name": "community-manager",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @mvp/web dev",
+    "build": "pnpm -r --if-present build",
+    "lint": "pnpm -r --if-present lint",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "cf:check": "pnpm --filter @mvp/web cf:check",
+    "cf:build": "pnpm --filter @mvp/web cf:build",
+    "cf:dry-run": "pnpm --filter @mvp/web cf:dry-run",
+    "cf:deploy": "pnpm --filter @mvp/web cf:deploy",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "supabase db reset"
+  },
+  "devDependencies": {
+    "supabase": "2.117.0"
+  }
+}

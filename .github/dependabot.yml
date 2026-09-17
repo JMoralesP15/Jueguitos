@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      next-and-react:
+        patterns:
+          - next
+          - react
+          - react-dom
+          - eslint-config-next
+      cloudflare:
+        patterns:
+          - vinext
+          - "@vinext/*"
+          - wrangler
+          - "@cloudflare/*"
+      supabase:
+        patterns:
+          - supabase
+          - "@supabase/*"

@@ -1,0 +1,22 @@
+{
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "relative",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "docs/inbox",
+  "attachmentFolderPath": "docs/assets",
+  "userIgnoreFilters": [
+    "node_modules/",
+    ".git",
+    "apps/web/dist/",
+    "supabase/.temp",
+    "work/",
+    "outputs/",
+    "apps/web/.next/",
+    "apps/web/.wrangler/",
+    "apps/web/node_modules/",
+    "packages/domain/node_modules/",
+    "apps/web/.vite/",
+    "packages/domain/.vite/"
+  ],
+  "useMarkdownLinks": true
+}

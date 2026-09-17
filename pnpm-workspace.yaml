@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - '@cloudflare/workers-types@5.20260917.1'
+  - miniflare@5.20260916.0-alpha
+  - wrangler@4.133.0
+  - '@cloudflare/vite-plugin@1.54.11'
