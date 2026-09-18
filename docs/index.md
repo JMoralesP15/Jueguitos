@@ -20,6 +20,7 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 
 - [Producto y roadmap](product/README.md)
 - [MVP-001: identidad y sesión](product/0001-identidad-y-sesion.md)
+- [MVP-002: comparaciones y voto único](product/0002-comparaciones-y-voto.md)
 - [Contratos futuros](contracts/README.md)
 - [Bandeja de ideas](inbox/README.md)
 
@@ -28,6 +29,8 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 - [Runbooks](runbooks/README.md)
 - [Exposición de secretos](runbooks/secret-exposure.md)
 - [Alertas de cuota](runbooks/quota-warning.md)
+- [Operación de Supabase alojado](runbooks/supabase-remote.md)
+- [SMTP gratuito con Resend](runbooks/smtp-resend.md)
 
 ## Regla simple
 
