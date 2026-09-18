@@ -16,7 +16,7 @@ miembro vote una sola vez. El resultado debe poder agregarse sin exponer el voto
 ## Fuera de alcance
 
 - Editar o retirar un voto, comentarios, rankings, imágenes y moderación.
-- Interfaz de creación o votación: se incorpora después de validar contrato y migración.
+- Publicación, pantalla de voto, resultados y edición de borradores.
 
 ## Riesgos
 
@@ -43,5 +43,6 @@ contratos reutilizables se declaran en `@mvp/domain` antes de construir pantalla
 
 ## Estado
 
-Contrato y migración inicial preparados localmente. No aplicar al proyecto remoto hasta revisar y
-aprobar la propuesta.
+Contrato y migración aplicados en el proyecto remoto el 18 de septiembre de 2026. La primera
+pantalla protegida de creación de borradores está en implementación; publicación y voto siguen
+pendientes.

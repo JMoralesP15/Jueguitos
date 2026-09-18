@@ -46,6 +46,9 @@ export default async function AccountPage() {
         </dl>
 
         <div className="account-actions">
+          <Link className="button" href="/comparaciones">
+            Mis comparaciones
+          </Link>
           <Link className="button button-secondary" href="/">
             Ir al inicio
           </Link>
