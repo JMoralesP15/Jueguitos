@@ -43,6 +43,6 @@ contratos reutilizables se declaran en `@mvp/domain` antes de construir pantalla
 
 ## Estado
 
-Contrato y migración aplicados en el proyecto remoto el 18 de septiembre de 2026. La primera
-pantalla protegida de creación de borradores está en implementación; publicación y voto siguen
-pendientes.
+Contrato y migración aplicados en el proyecto remoto el 18 de septiembre de 2026. La pantalla
+protegida de borradores está disponible. Este módulo no se amplía en el juego público: queda como
+posible base futura para testing A/B. El núcleo vigente se documenta en `roadmap.md` y ADR 0004.

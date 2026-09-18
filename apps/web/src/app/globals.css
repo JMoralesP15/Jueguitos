@@ -184,6 +184,147 @@ input[aria-invalid="true"] {
   border-color: #b42318;
 }
 
+.game-page {
+  width: min(980px, calc(100% - 32px));
+  padding-bottom: 24px;
+}
+
+.game-header {
+  max-width: 680px;
+  margin-bottom: 32px;
+}
+
+.duel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.duel-card {
+  display: grid;
+  overflow: hidden;
+  padding: 0 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--surface);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.duel-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 28px rgb(23 32 51 / 12%);
+  transform: translateY(-2px);
+}
+
+.duel-card:focus-visible {
+  outline: 3px solid #80aee5;
+  outline-offset: 3px;
+}
+
+.duel-card:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.duel-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--border);
+}
+
+.duel-name,
+.duel-meta {
+  padding: 0 20px;
+}
+
+.duel-name {
+  margin-top: 18px;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.duel-meta {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.game-status {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  min-height: 180px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.game-status p {
+  margin: 0;
+}
+
+.game-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 16px 48px;
+  font-weight: 700;
+}
+
+.how-it-works {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.ranking-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ranking-list li {
+  display: grid;
+  grid-template-columns: 48px 64px 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.ranking-position {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.ranking-image {
+  width: 64px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--border);
+}
+
+.ranking-list h3,
+.ranking-list p {
+  margin: 0;
+}
+
+.ranking-list p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .field-help,
 .field-error,
 .form-message,
@@ -325,5 +466,9 @@ dd {
   .comparison-form,
   .account-card {
     padding: 24px;
+  }
+
+  .duel-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,5 +1,7 @@
 # Producto
 
-Aquí definiremos problema, alcance del MVP, historias de usuario, métricas y roadmap.
+Aquí definimos problema, alcance del MVP, historias de usuario, métricas y roadmap.
 
-El primer incremento verificable está definido en [0001-identidad-y-sesion.md](0001-identidad-y-sesion.md).
+El roadmap vigente está en [roadmap.md](roadmap.md). Los incrementos ya implementados se registran
+en [0001-identidad-y-sesion.md](0001-identidad-y-sesion.md) y
+[0002-comparaciones-y-voto.md](0002-comparaciones-y-voto.md).
