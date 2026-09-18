@@ -2,8 +2,10 @@
 
 export type SubmissionActionState = {
   fieldErrors?: {
+    address?: string;
     category?: string;
     city?: string;
+    location?: string;
     name?: string;
     photo?: string;
   };

@@ -40,8 +40,13 @@ Turnstile es requisito antes de exponer el juego al público.
 - Categorías cerradas para mantener el catálogo consistente.
 - Fotos privadas y aportes `pending` hasta una revisión humana.
 
-Siguiente subhito: panel de moderación para detectar duplicados, aprobar un aporte y preparar su
-imagen pública antes de incorporarlo al juego.
+## MVP-004b — Ubicación y moderación (completado)
+
+- Dirección, geolocalización con consentimiento y ajuste manual del pin.
+- Panel de administración para aprobar o descartar aportes pendientes.
+- Al aprobar, la foto privada se copia al catálogo público y el local entra al juego.
+
+Siguiente subhito: detección de duplicados, ficha pública de cada local y consultas “cerca de mí”.
 
 ## Criterio para pasar a piloto
 

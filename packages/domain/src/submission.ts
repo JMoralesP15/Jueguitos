@@ -24,8 +24,13 @@ export const businessCategories = [
 export const businessCategorySchema = z.enum(businessCategories);
 
 export const createBusinessSubmissionSchema = z.object({
+  address: z.string().trim().min(5, "Indica una dirección o referencia del local.").max(200),
   category: businessCategorySchema,
   city: z.string().trim().min(2, "Indica una ciudad.").max(80),
+  latitude: z.coerce.number().gte(-90).lte(90),
+  locationAccuracyMeters: z.coerce.number().positive().max(50_000).optional(),
+  locationSource: z.enum(["device", "manual"]),
+  longitude: z.coerce.number().gte(-180).lte(180),
   name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres.").max(120),
 });
 

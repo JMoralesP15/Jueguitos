@@ -15,6 +15,7 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 - [Decisión: correo, contraseña y nombre de usuario](adr/0002-auth-email-password.md)
 - [Decisión: monolito modular y Supabase](adr/0003-monolith-supabase.md)
 - [Decisión: aportes privados de locales](adr/0005-aportes-privados-de-locales.md)
+- [Decisión: ubicación y moderación](adr/0006-ubicacion-y-moderacion-de-locales.md)
 - [Notas de arquitectura](architecture/README.md)
 
 ## Producto y contratos

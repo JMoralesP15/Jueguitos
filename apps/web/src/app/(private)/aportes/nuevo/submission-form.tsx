@@ -5,6 +5,8 @@ import { useActionState } from "react";
 
 import { initialSubmissionActionState, type SubmissionFormAction } from "@/lib/submissions/form-state";
 
+import { MapPicker } from "./map-picker";
+
 type SubmissionFormProps = { action: SubmissionFormAction };
 
 export function SubmissionForm({ action }: SubmissionFormProps) {
@@ -40,6 +42,16 @@ export function SubmissionForm({ action }: SubmissionFormProps) {
         <input aria-invalid={Boolean(state.fieldErrors?.city)} id="city" maxLength={80} name="city" placeholder="Ej.: Santiago" required />
         {state.fieldErrors?.city ? <p className="field-error">{state.fieldErrors.city}</p> : null}
       </div>
+
+      <div className="field-group">
+        <label htmlFor="address">Dirección o referencia</label>
+        <input aria-invalid={Boolean(state.fieldErrors?.address)} id="address" maxLength={200} name="address" placeholder="Ej.: Av. Providencia 1234, frente al metro" required />
+        <p className="field-help">Se publicará al aprobar el local para que las personas puedan visitarlo.</p>
+        {state.fieldErrors?.address ? <p className="field-error">{state.fieldErrors.address}</p> : null}
+      </div>
+
+      <MapPicker />
+      {state.fieldErrors?.location ? <p className="field-error">{state.fieldErrors.location}</p> : null}
 
       <div className="field-group">
         <label htmlFor="photo">Foto propia del local</label>

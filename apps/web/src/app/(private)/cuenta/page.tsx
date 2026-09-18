@@ -17,7 +17,7 @@ export default async function AccountPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("username, display_name")
+    .select("username, display_name, role")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -52,6 +52,7 @@ export default async function AccountPage() {
           <Link className="button" href="/comparaciones">
             Mis comparaciones
           </Link>
+          {profile?.role === "admin" ? <Link className="button button-secondary" href="/admin/aportes">Revisar locales</Link> : null}
           <Link className="button button-secondary" href="/">
             Ir al inicio
           </Link>
