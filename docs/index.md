@@ -14,6 +14,7 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 - [Decisión: alojamiento en Cloudflare](adr/0001-hosting-cloudflare.md)
 - [Decisión: correo, contraseña y nombre de usuario](adr/0002-auth-email-password.md)
 - [Decisión: monolito modular y Supabase](adr/0003-monolith-supabase.md)
+- [Decisión: aportes privados de locales](adr/0005-aportes-privados-de-locales.md)
 - [Notas de arquitectura](architecture/README.md)
 
 ## Producto y contratos
@@ -23,6 +24,7 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 - [MVP-001: identidad y sesión](product/0001-identidad-y-sesion.md)
 - [MVP-002: comparaciones y voto único](product/0002-comparaciones-y-voto.md)
 - [Contratos futuros](contracts/README.md)
+- [Contrato de aporte de local](contracts/item-submissions.md)
 - [Bandeja de ideas](inbox/README.md)
 
 ## Operación

@@ -30,8 +30,8 @@ export default async function AccountPage() {
         <p className="eyebrow">Área protegida</p>
         <h1 id="account-title">Hola, {username}</h1>
         <p className="lede">
-          Esta sección sólo se muestra cuando Supabase valida una sesión activa. Aquí vivirán tus
-          comparaciones, votos y preferencias.
+          Esta sección sólo se muestra cuando Supabase valida una sesión activa. Aquí viven tus
+          aportes, comparaciones y preferencias.
         </p>
 
         <dl className="account-details">
@@ -46,6 +46,9 @@ export default async function AccountPage() {
         </dl>
 
         <div className="account-actions">
+          <Link className="button" href="/aportes">
+            Mis aportes
+          </Link>
           <Link className="button" href="/comparaciones">
             Mis comparaciones
           </Link>

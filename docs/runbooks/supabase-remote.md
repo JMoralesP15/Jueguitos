@@ -10,6 +10,9 @@
 - `20260918010000_create_duel_engine.sql` se aplicó manualmente el 18 de septiembre de 2026 y
   Supabase confirmó `Success. No rows returned`. Crea el motor público de nombres: `items`,
   `duels`, `duel_votes`, ranking y las operaciones atómicas de voto.
+- `20260918020000_add_item_submissions.sql` se aplicó manualmente el 18 de septiembre de 2026 y
+  Supabase confirmó `Success. No rows returned`. Crea el bucket privado `item-submissions` y las
+  reglas para aportes protegidos de locales.
 - La confirmación de correo está desactivada de manera temporal para las pruebas privadas.
 - El ingreso anónimo está activo únicamente para la prueba privada del juego. Antes de abrir el
   piloto público debe quedar protegido con Turnstile.

@@ -13,7 +13,7 @@ cuenta; aportar un descubrimiento sí.
 | Fundación | Repositorio, contratos, Supabase, sesión y controles básicos | Completada |
 | MVP-003a: motor del juego | Ítems, duelo anónimo, voto atómico, Elo y ranking | Base técnica completada |
 | MVP-003b: experiencia de juego | Pantalla de duelo rápida, siguiente duelo y ranking público | Pendiente |
-| MVP-004: aportes | Foto, nombre, categoría, ciudad, duplicados y moderación mínima | Pendiente |
+| MVP-004: aportes | Foto, nombre, categoría, ciudad, duplicados y moderación mínima | Activa |
 | Piloto | Dataset, medición, protección antiabuso y despliegue | Pendiente |
 
 ## MVP-003a — Alcance actual
@@ -33,6 +33,15 @@ Turnstile es requisito antes de exponer el juego al público.
 1. Primero se valida que votar sea entretenido y recurrente.
 2. Luego se habilita que las personas aporten contenido.
 3. Sólo después se agregan funciones sociales, SEO avanzado o monetización.
+
+## MVP-004a — Aporte privado (completado)
+
+- Área protegida para enviar nombre, categoría, ciudad y una foto propia.
+- Categorías cerradas para mantener el catálogo consistente.
+- Fotos privadas y aportes `pending` hasta una revisión humana.
+
+Siguiente subhito: panel de moderación para detectar duplicados, aprobar un aporte y preparar su
+imagen pública antes de incorporarlo al juego.
 
 ## Criterio para pasar a piloto
 

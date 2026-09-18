@@ -7,3 +7,5 @@ El contrato de autenticación actual está en [../auth-contracts.md](../auth-con
 El contrato de comparaciones y votos está en [comparison-vote.md](comparison-vote.md).
 
 El contrato del juego público y ranking está en [duel-ranking.md](duel-ranking.md).
+
+El contrato de aportes privados está en [item-submissions.md](item-submissions.md).
