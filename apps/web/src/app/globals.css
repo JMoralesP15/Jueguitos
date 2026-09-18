@@ -72,6 +72,151 @@ h2 {
   font-size: 1.1rem;
 }
 
+a {
+  color: var(--accent);
+}
+
+.hero-actions,
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 9px;
+  color: #ffffff;
+  background: var(--accent);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  filter: brightness(1.12);
+}
+
+.button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid #80aee5;
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.button-secondary {
+  color: var(--accent);
+  background: var(--surface);
+}
+
+.text-link,
+.back-link {
+  font-weight: 700;
+}
+
+.auth-page {
+  width: min(520px, calc(100% - 32px));
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 26px;
+  text-decoration: none;
+}
+
+.auth-form,
+.account-card {
+  display: grid;
+  gap: 20px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 14px 36px rgb(23 32 51 / 6%);
+}
+
+.form-heading h1,
+.account-card h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 6vw, 3.3rem);
+}
+
+.field-group {
+  display: grid;
+  gap: 7px;
+}
+
+label {
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #aeb6c4;
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--surface);
+  font: inherit;
+}
+
+input[aria-invalid="true"] {
+  border-color: #b42318;
+}
+
+.field-help,
+.field-error,
+.form-message,
+.form-footer,
+.notice {
+  margin: 0;
+}
+
+.field-help {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.field-error,
+.form-message {
+  color: #9a1b12;
+  font-weight: 600;
+}
+
+.form-message,
+.notice {
+  padding: 12px 14px;
+  border-left: 4px solid #c96f19;
+  border-radius: 4px;
+  background: #fff7ed;
+}
+
+.form-footer {
+  color: var(--muted);
+}
+
+.account-details {
+  margin-top: 6px;
+}
+
+.account-actions form {
+  margin: 0;
+}
+
 ul {
   display: grid;
   gap: 12px;
@@ -114,5 +259,10 @@ dd {
   dl div {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+
+  .auth-form,
+  .account-card {
+    padding: 24px;
   }
 }

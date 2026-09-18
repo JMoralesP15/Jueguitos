@@ -4,6 +4,13 @@
 
 Permitir que una persona cree una cuenta, inicie sesión, cierre sesión y mantenga un perfil público mínimo. Es el primer incremento que habilita voto, propiedad de contenido y reglas RLS posteriores.
 
+## Estado
+
+Validado el 18 de septiembre de 2026 contra el proyecto alojado de Supabase. Se comprobó
+registro, creación automática de perfil, acceso, área protegida y cierre de sesión con una cuenta
+de prueba. La confirmación de correo queda desactivada sólo durante el desarrollo privado, hasta
+configurar SMTP externo.
+
 ## Alcance
 
 - Pantallas `/registro`, `/ingresar` y `/cuenta`.
@@ -41,12 +48,34 @@ Usar Server Actions de Next.js para registro, inicio y cierre de sesión. Cada a
 5. Cerrar sesión invalida el acceso a `/cuenta`.
 6. La interfaz funciona en local y el build del Worker completa sin incompatibilidades nuevas.
 
+## Implementación
+
+- `/registro` valida los tres datos del contrato y llama a `supabase.auth.signUp` desde el
+  servidor. El alias llega como metadata; el trigger SQL crea el perfil.
+- `/ingresar` usa correo y contraseña y conserva un mensaje genérico ante credenciales erróneas.
+- `/cuenta` consulta la identidad validada por Supabase en cada carga. Sin sesión, redirige a
+  `/ingresar?origen=cuenta`; no depende de que la interfaz oculte un enlace.
+- El cierre de sesión elimina la sesión en Supabase y redirige al inicio.
+
 ## Plan de validación
 
 1. Aplicar la migración contra Supabase local.
 2. Probar registro, duplicado, ingreso, ruta protegida y salida con una cuenta de prueba.
 3. Ejecutar `pnpm check`, `pnpm cf:check` y `pnpm cf:dry-run`.
 4. Abrir una pull request y exigir el workflow `quality` antes de fusionar.
+
+## Resultado de validación
+
+| Comprobación | Resultado |
+| --- | --- |
+| Migración `profiles` aplicada en Supabase alojado | Correcta |
+| Registro y trigger de perfil | Correctos |
+| Ruta `/cuenta` sin sesión | Redirige a `/ingresar` |
+| Cierre e inicio de sesión | Correctos |
+| Build de Next.js y simulación del Worker | Correctos |
+
+> La primera migración se aplicó desde SQL Editor. No se debe ejecutar `supabase db push` para
+> esta migración sin reconciliar antes el historial de migraciones remoto.
 
 ## Siguiente decisión
 

@@ -26,3 +26,16 @@ Entrada: `email` y `password`. El nombre de usuario no se utiliza como credencia
 Google OAuth puede añadirse como otro proveedor de la misma cuenta. Antes de activarlo se debe definir cómo se asigna o solicita el `username` cuando el proveedor no lo entrega.
 
 En el proyecto alojado de Supabase se debe activar la confirmación de correo antes de producción. Localmente queda desactivada para no bloquear el desarrollo con correo saliente.
+
+## Confirmación de correo alojada
+
+La aplicación incluye `GET /auth/confirm`, que verifica el `token_hash` de Supabase en el servidor,
+crea la cookie de sesión y redirige a `/cuenta`. Al activar confirmación de correo en el proyecto
+alojado, la plantilla **Confirm signup** debe usar:
+
+```html
+{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email
+```
+
+Durante el desarrollo con el proyecto alojado, configura `http://localhost:3000` como **Site URL**.
+Antes de publicar, se reemplaza por el dominio HTTPS final y se añade también como URL de redirección.

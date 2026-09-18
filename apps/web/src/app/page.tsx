@@ -13,8 +13,19 @@ export default function HomePage() {
         <h1 id="page-title">Arquitectura inicial preparada</h1>
         <p className="lede">
           El repositorio ya separa decisiones, dominio, aplicación web, infraestructura local y
-          automatización. El siguiente incremento será el esquema de datos y las políticas RLS.
+          automatización. El primer flujo de identidad está listo para conectarse a Supabase.
         </p>
+        <div className="hero-actions">
+          <a className="button" href="/registro">
+            Crear cuenta
+          </a>
+          <a className="button button-secondary" href="/ingresar">
+            Ingresar
+          </a>
+          <a className="text-link" href="/cuenta">
+            Ver mi área privada
+          </a>
+        </div>
       </section>
 
       <section aria-labelledby="decisions-title">
@@ -39,7 +50,7 @@ export default function HomePage() {
           </div>
           <div>
             <dt>Supabase</dt>
-            <dd>Configuración local preparada para las primeras migraciones</dd>
+            <dd>Registro, ingreso y sesión preparados para las migraciones</dd>
           </div>
         </dl>
       </section>
