@@ -8,6 +8,7 @@ function safeNextPath(value: string | null) {
 }
 
 export async function GET(request: NextRequest) {
+  const code = request.nextUrl.searchParams.get("code");
   const tokenHash = request.nextUrl.searchParams.get("token_hash");
   const type = request.nextUrl.searchParams.get("type") as EmailOtpType | null;
   const redirectUrl = request.nextUrl.clone();
@@ -22,6 +23,12 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return NextResponse.redirect(redirectUrl);
     }
+  }
+
+  if (code) {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) return NextResponse.redirect(redirectUrl);
   }
 
   redirectUrl.pathname = "/ingresar";

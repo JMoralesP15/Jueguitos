@@ -1,6 +1,7 @@
 "use server";
 
 import { registerCredentialsSchema, signInCredentialsSchema } from "@mvp/domain";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { z } from "zod";
 
@@ -84,6 +85,58 @@ export async function signInAction(
   }
 
   redirect("/cuenta");
+}
+
+export async function requestPasswordResetAction(
+  _previousState: AuthActionState,
+  formData: FormData,
+): Promise<AuthActionState> {
+  const email = typeof formData.get("email") === "string" ? String(formData.get("email")).trim() : "";
+
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    return { fieldErrors: { email: "Ingresa un correo válido." } };
+  }
+
+  const origin = (await headers()).get("origin");
+  const supabase = await createClient();
+  if (origin) {
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${origin}/auth/confirm?next=/actualizar-contrasena`,
+    });
+  }
+
+  // La misma respuesta protege contra la enumeración de cuentas.
+  return { message: "Si existe una cuenta asociada, te enviamos un enlace para restablecer la contraseña." };
+}
+
+export async function updatePasswordAction(
+  _previousState: AuthActionState,
+  formData: FormData,
+): Promise<AuthActionState> {
+  const password = formData.get("password");
+  const passwordConfirmation = formData.get("passwordConfirmation");
+  const { passwordSchema } = await import("@mvp/domain");
+  const validation = passwordSchema.safeParse(password);
+
+  if (!validation.success) {
+    return { fieldErrors: { password: validation.error.issues[0]?.message ?? "La contraseña no es válida." } };
+  }
+  if (password !== passwordConfirmation) {
+    return { fieldErrors: { password: "Las contraseñas no coinciden." } };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { message: "El enlace venció o no es válido. Solicita uno nuevo." };
+  }
+
+  const { error } = await supabase.auth.updateUser({ password: validation.data });
+  if (error) return { message: "No pudimos actualizar la contraseña. Solicita un nuevo enlace." };
+
+  redirect("/ingresar?recuperacion=ok");
 }
 
 export async function signOutAction() {

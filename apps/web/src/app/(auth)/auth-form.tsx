@@ -110,6 +110,7 @@ export function AuthForm({ action, mode }: AuthFormProps) {
           {isRegistration ? "Ingresa aquí" : "Crea una cuenta"}
         </Link>
       </p>
+      {!isRegistration ? <Link className="text-link" href="/recuperar-contrasena">Olvidé mi contraseña</Link> : null}
     </form>
   );
 }

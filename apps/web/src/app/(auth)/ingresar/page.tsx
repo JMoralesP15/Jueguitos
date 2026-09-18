@@ -4,11 +4,11 @@ import { AuthForm } from "../auth-form";
 import { signInAction } from "../actions";
 
 type SignInPageProps = {
-  searchParams: Promise<{ error?: string; origen?: string; registro?: string }>;
+  searchParams: Promise<{ error?: string; origen?: string; registro?: string; recuperacion?: string }>;
 };
 
 export default async function SignInPage({ searchParams }: SignInPageProps) {
-  const { error, origen, registro } = await searchParams;
+  const { error, origen, registro, recuperacion } = await searchParams;
 
   return (
     <main className="auth-page">
@@ -31,6 +31,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
           cuenta nuevamente.
         </p>
       ) : null}
+      {recuperacion === "ok" ? <p className="notice" role="status">Tu contraseña fue actualizada. Ya puedes ingresar.</p> : null}
       <AuthForm action={signInAction} mode="sign-in" />
     </main>
   );

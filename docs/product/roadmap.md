@@ -48,6 +48,12 @@ Turnstile es requisito antes de exponer el juego al público.
 
 Siguiente subhito: detección de duplicados, ficha pública de cada local y consultas “cerca de mí”.
 
+## Refuerzo previo a MVP-005
+
+- Recuperación de contraseña por correo, sin revelar si una cuenta existe.
+- Pendiente de operación: configurar SMTP y las URL de retorno de cada entorno para probar el
+  envío real de enlaces.
+
 ## Criterio para pasar a piloto
 
 - Catálogo curado inicial de 100 a 300 ítems con derecho de uso de sus imágenes.

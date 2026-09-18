@@ -32,3 +32,6 @@ desde SQL Editor **o** con la CLI, nunca ambas vías.
 2. Activar confirmación de correo.
 3. Configurar el dominio HTTPS final como Site URL y redirect URL.
 4. Activar Turnstile para registro e ingreso anónimo, y revisar límites de cuota.
+5. En **Authentication → URL Configuration**, registrar la URL de producción y las URLs de
+   prueba autorizadas para recuperación de contraseña. Los Quick Tunnels cambian en cada sesión;
+   se agregan sólo para probar y se eliminan después.
