@@ -447,6 +447,96 @@ select[aria-invalid="true"] {
   background: #fffaf5;
 }
 
+.submission-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.submission-steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.submission-steps span {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--accent);
+  font-size: 0.72rem;
+}
+
+.submission-step {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fffdf9, #fff7ed);
+}
+
+.step-heading {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.step-heading > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), #fb923c);
+  font-weight: 900;
+}
+
+.step-heading .eyebrow {
+  margin-bottom: 2px;
+}
+
+.step-heading h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.photo-dropzone {
+  padding: 18px;
+  border: 2px dashed #fdba74;
+  border-radius: 16px;
+  background: #fffaf5;
+}
+
+.submission-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.submission-footer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .location-picker legend {
   padding: 0 6px;
   font-weight: 800;
