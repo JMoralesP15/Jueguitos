@@ -13,9 +13,9 @@
 - `20260918020000_add_item_submissions.sql` se aplicó manualmente el 18 de septiembre de 2026 y
   Supabase confirmó `Success. No rows returned`. Crea el bucket privado `item-submissions` y las
   reglas para aportes protegidos de locales.
-- `20260918030000_add_locations_and_admin_review.sql` incorpora ubicación, el rol administrativo,
-  el bucket público de imágenes aprobadas y las políticas de revisión. Debe aplicarse una sola vez
-  desde SQL Editor antes de probar MVP-004b.
+- `20260918030000_add_locations_and_admin_review.sql` se aplicó manualmente el 18 de septiembre de
+  2026 y Supabase confirmó `Success. No rows returned`. Incorpora ubicación, el rol administrativo,
+  el bucket público de imágenes aprobadas y las políticas de revisión de MVP-004b.
 - La confirmación de correo está desactivada de manera temporal para las pruebas privadas.
 - El ingreso anónimo está activo únicamente para la prueba privada del juego. Antes de abrir el
   piloto público debe quedar protegido con Turnstile.

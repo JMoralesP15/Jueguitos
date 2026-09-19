@@ -22,6 +22,7 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 
 - [Producto y roadmap](product/README.md)
 - [Roadmap operativo](product/roadmap.md)
+- [Informe de avance técnico — 19 de septiembre de 2026](product/informe-avance-mvp-2026-09-19.md)
 - [MVP-001: identidad y sesión](product/0001-identidad-y-sesion.md)
 - [MVP-002: comparaciones y voto único](product/0002-comparaciones-y-voto.md)
 - [Contratos futuros](contracts/README.md)
