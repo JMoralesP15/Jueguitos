@@ -16,6 +16,9 @@
 - `20260918030000_add_locations_and_admin_review.sql` se aplicó manualmente el 18 de septiembre de
   2026 y Supabase confirmó `Success. No rows returned`. Incorpora ubicación, el rol administrativo,
   el bucket público de imágenes aprobadas y las políticas de revisión de MVP-004b.
+- `20260919000000_add_closed_test_rounds_and_metrics.sql` se aplicó manualmente el 20 de septiembre
+  de 2026 y Supabase confirmó `Success. No rows returned`. La verificación posterior confirmó las
+  tablas `game_sessions`, `product_events` y la función `record_ranking_view`.
 - La confirmación de correo está desactivada de manera temporal para las pruebas privadas.
 - El ingreso anónimo está activo únicamente para la prueba privada del juego. Antes de abrir el
   piloto público debe quedar protegido con Turnstile.

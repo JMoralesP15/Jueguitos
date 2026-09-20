@@ -29,6 +29,7 @@ export const createBusinessSubmissionSchema = z.object({
   city: z.string().trim().min(2, "Indica una ciudad.").max(80),
   latitude: z.coerce.number().gte(-90).lte(90),
   locationAccuracyMeters: z.coerce.number().positive().max(50_000).optional(),
+  locationConfirmed: z.string().refine((value) => value === "true", "Confirma el punto del local en el mapa."),
   locationSource: z.enum(["device", "manual"]),
   longitude: z.coerce.number().gte(-180).lte(180),
   name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres.").max(120),

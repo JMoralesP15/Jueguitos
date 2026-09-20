@@ -23,7 +23,7 @@ function validationState(error: z.ZodError): SubmissionActionState {
     if ((field === "address" || field === "category" || field === "city" || field === "name") && !fieldErrors[field]) {
       fieldErrors[field] = issue.message;
     }
-    if ((field === "latitude" || field === "longitude" || field === "locationSource") && !fieldErrors.location) {
+    if ((field === "latitude" || field === "longitude" || field === "locationConfirmed" || field === "locationSource") && !fieldErrors.location) {
       fieldErrors.location = "Confirma o ajusta el punto en el mapa.";
     }
   }
@@ -41,6 +41,7 @@ export async function createBusinessSubmissionAction(
     city: formData.get("city"),
     latitude: formData.get("latitude"),
     locationAccuracyMeters: formData.get("locationAccuracyMeters") || undefined,
+    locationConfirmed: formData.get("locationConfirmed"),
     locationSource: formData.get("locationSource"),
     longitude: formData.get("longitude"),
     name: formData.get("name"),

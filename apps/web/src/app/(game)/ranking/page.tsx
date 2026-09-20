@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { createClient } from "@/lib/supabase/server";
 
+import { RankingViewTracker } from "./ranking-view-tracker";
+
 type RankingItem = {
   city: string;
   duel_count: number;
@@ -19,6 +21,7 @@ export default async function RankingPage() {
 
   return (
     <main>
+      <RankingViewTracker />
       <section className="dashboard-heading" aria-labelledby="ranking-title">
         <p className="eyebrow">Ranking público</p>
         <h1 id="ranking-title">Los nombres favoritos</h1>

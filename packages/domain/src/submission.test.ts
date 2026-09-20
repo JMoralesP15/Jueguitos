@@ -11,6 +11,7 @@ describe("createBusinessSubmissionSchema", () => {
         city: "Santiago",
         latitude: -33.426,
         locationAccuracyMeters: 18,
+        locationConfirmed: "true",
         locationSource: "device",
         longitude: -70.61,
         name: "  Café del Barrio  ",
@@ -21,6 +22,7 @@ describe("createBusinessSubmissionSchema", () => {
       city: "Santiago",
       latitude: -33.426,
       locationAccuracyMeters: 18,
+      locationConfirmed: "true",
       locationSource: "device",
       longitude: -70.61,
       name: "Café del Barrio",
@@ -34,6 +36,21 @@ describe("createBusinessSubmissionSchema", () => {
         category: "Cafés",
         city: "Santiago",
         latitude: -33.426,
+        locationSource: "manual",
+        longitude: -70.61,
+        name: "Café del Barrio",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("requires an explicit map confirmation", () => {
+    expect(
+      createBusinessSubmissionSchema.safeParse({
+        address: "Av. Providencia 1234",
+        category: "Cafetería y pastelería",
+        city: "Santiago",
+        latitude: -33.426,
+        locationConfirmed: "",
         locationSource: "manual",
         longitude: -70.61,
         name: "Café del Barrio",

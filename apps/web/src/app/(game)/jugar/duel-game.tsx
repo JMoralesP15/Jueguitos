@@ -26,10 +26,10 @@ export function DuelGame() {
 
     if (error || !parsed.success) {
       setDuel(null);
-      setStatus(error?.message.includes("not enough unseen items") ? "empty" : "error");
+      setStatus(error?.message.includes("round is complete") ? "empty" : "error");
       setMessage(
-        error?.message.includes("not enough unseen items")
-          ? "Necesitamos sumar más locales para continuar el juego."
+        error?.message.includes("round is complete")
+          ? "Terminaste esta ronda sin repetir locales. Vuelve más tarde para jugar una nueva."
           : "No pudimos preparar un duelo. Inténtalo nuevamente.",
       );
       return;

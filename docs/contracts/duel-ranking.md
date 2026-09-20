@@ -17,10 +17,18 @@
 }
 ```
 
+## Ronda de juego
+
+Una ronda pertenece a la identidad anónima o autenticada de Supabase y se mantiene activa mientras
+la persona interactúe al menos una vez cada 30 minutos. Dentro de la ronda, cada ítem aparece como
+máximo en un duelo. Una nueva ronda puede reutilizar ítems para que una visita posterior no agote el
+catálogo.
+
 ## Solicitar duelo
 
 La aplicación invoca `public.create_next_duel()`. PostgreSQL identifica a la persona desde
-`auth.uid()`, selecciona dos ítems activos que esa persona no ha votado y crea un duelo abierto.
+`auth.uid()`. Si ya existe un duelo abierto de su ronda activa, devuelve ese mismo duelo. En caso
+contrario selecciona dos ítems activos que no han aparecido en la ronda y crea uno nuevo.
 
 Salida:
 
@@ -42,8 +50,9 @@ Salida:
 ```
 
 La aplicación llama a `public.cast_duel_vote(duelId, winnerId)`. La función comprueba la identidad,
-que el duelo pertenezca a esa identidad, que siga abierto y que el ganador sea uno de sus dos
-ítems. Luego registra una vez el voto y actualiza los dos Elo con K=32 en la misma transacción.
+que el duelo pertenezca a una ronda vigente de esa identidad, que siga abierto y que el ganador sea
+uno de sus dos ítems. Luego registra una vez el voto y actualiza los dos Elo con K=32 en la misma
+transacción.
 
 ## Ranking
 

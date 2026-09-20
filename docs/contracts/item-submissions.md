@@ -13,6 +13,7 @@ Una cuenta registrada puede enviar:
   latitude: number;
   longitude: number;
   locationSource: "device" | "manual";
+  locationConfirmed: true;
   photo: File;       // JPG, PNG o WebP; máximo 5 MB
 }
 ```
@@ -31,4 +32,5 @@ en el bucket privado `item-submissions`; no se muestra en el juego ni se sirve c
 hasta la aprobación.
 
 La persona puede usar su ubicación actual con permiso del navegador o tocar el mapa para corregir
-el pin. La ubicación sólo se publica al aprobar el local.
+el pin. Debe confirmar explícitamente el punto antes de enviar; la aplicación no asigna una
+ubicación predeterminada. La ubicación sólo se publica al aprobar el local.

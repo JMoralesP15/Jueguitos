@@ -12,7 +12,7 @@ cuenta; aportar un descubrimiento sí.
 | --- | --- | --- |
 | Fundación | Repositorio, contratos, Supabase, sesión y controles básicos | Completada |
 | MVP-003a: motor del juego | Ítems, duelo anónimo, voto atómico, Elo y ranking | Base técnica completada |
-| MVP-003b: experiencia de juego | Pantalla de duelo rápida, siguiente duelo y ranking público | Pendiente |
+| MVP-003b: experiencia de juego | Rondas sin repetición inmediata, recarga segura y ranking público | Activa: prueba cerrada |
 | MVP-004: aportes | Foto, nombre, categoría, ciudad, duplicados y moderación mínima | Activa |
 | Piloto | Dataset, medición, protección antiabuso y despliegue | Pendiente |
 
@@ -25,8 +25,8 @@ cuenta; aportar un descubrimiento sí.
 - Ranking público con rating, victorias, derrotas y número de duelos.
 - Sin subida de contenido, comentarios, geolocalización automática ni matchmaking personalizado.
 
-Pendiente para cerrar este hito: cargar y moderar el catálogo inicial de 100 a 300 locales.
-Turnstile es requisito antes de exponer el juego al público.
+La prueba cerrada usa 20 locales de Santiago y una cohorte de 10 a 15 personas invitadas. Para el
+piloto público siguen pendientes 100 a 300 locales, Turnstile y correo configurado.
 
 ## Principios de secuencia
 
@@ -53,6 +53,16 @@ Siguiente subhito: detección de duplicados, ficha pública de cada local y cons
 - Recuperación de contraseña por correo, sin revelar si una cuenta existe.
 - Pendiente de operación: configurar SMTP y las URL de retorno de cada entorno para probar el
   envío real de enlaces.
+
+## Prueba cerrada de Santiago
+
+- Una ronda dura 30 minutos de inactividad: no repite locales dentro de la ronda y recupera un duelo
+  abierto tras una recarga.
+- La ubicación debe ser confirmada de forma explícita; no existe un pin por defecto.
+- El enlace estable `workers.dev` se comparte sólo con 10 a 15 personas invitadas. No es un piloto
+  público ni sustituye un dominio propio.
+- Se medirán `duel_viewed`, `vote_cast` y `ranking_viewed`; la decisión posterior se basará en votos
+  por visita, finalización de duelos y retorno.
 
 ## Criterio para pasar a piloto
 

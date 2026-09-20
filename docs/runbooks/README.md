@@ -6,5 +6,6 @@ Cada procedimiento debe registrar señal, diagnóstico, acción, responsable y c
 
 - `quota-warning.md` para límites de servicios gratuitos.
 - `secret-exposure.md` para credenciales filtradas.
+- `prueba-cerrada-santiago.md` para preparar, ejecutar y cerrar la cohorte de validación.
 
 Los procedimientos de fraude, moderación, restauración y consistencia de ratings se añadirán durante las fases correspondientes.

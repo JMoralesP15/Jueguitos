@@ -6,19 +6,17 @@ import { useEffect, useRef, useState } from "react";
 type LocationSource = "device" | "manual";
 type Coordinates = { accuracy?: number; latitude: number; longitude: number; source: LocationSource };
 
-const initialCoordinates: Coordinates = {
-  latitude: -33.4489,
-  longitude: -70.6693,
-  source: "manual",
-};
+const initialMapCenter: [number, number] = [-33.4489, -70.6693];
 
 export function MapPicker() {
   const mapElement = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const markerRef = useRef<Marker | null>(null);
   const leafletRef = useRef<typeof import("leaflet") | null>(null);
-  const [coordinates, setCoordinates] = useState<Coordinates>(initialCoordinates);
-  const [message, setMessage] = useState("Puedes arrastrar el mapa y tocar el punto exacto del local.");
+  const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isMapReady, setIsMapReady] = useState(false);
+  const [message, setMessage] = useState("Elige un punto en el mapa o sugiere tu ubicación. Luego confírmalo.");
 
   useEffect(() => {
     let active = true;
@@ -28,7 +26,7 @@ export function MapPicker() {
 
       leafletRef.current = leaflet;
       const map = leaflet.map(mapElement.current, { scrollWheelZoom: false }).setView(
-        [initialCoordinates.latitude, initialCoordinates.longitude],
+        initialMapCenter,
         12,
       );
       leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -37,9 +35,11 @@ export function MapPicker() {
       }).addTo(map);
       map.on("click", (event) => {
         setCoordinates({ latitude: event.latlng.lat, longitude: event.latlng.lng, source: "manual" });
-        setMessage("Punto ajustado manualmente. Puedes volver a pulsar si deseas afinarlo.");
+        setIsConfirmed(false);
+        setMessage("Punto ajustado manualmente. Confírmalo antes de enviar el aporte.");
       });
       mapRef.current = map;
+      setIsMapReady(true);
       window.setTimeout(() => map.invalidateSize(), 0);
     });
 
@@ -48,13 +48,14 @@ export function MapPicker() {
       mapRef.current?.remove();
       mapRef.current = null;
       markerRef.current = null;
+      setIsMapReady(false);
     };
   }, []);
 
   useEffect(() => {
     const map = mapRef.current;
     const leaflet = leafletRef.current;
-    if (!map || !leaflet) return;
+    if (!map || !leaflet || !coordinates || !isMapReady) return;
 
     const point: [number, number] = [coordinates.latitude, coordinates.longitude];
     if (!markerRef.current) {
@@ -65,7 +66,7 @@ export function MapPicker() {
       markerRef.current.setLatLng(point);
     }
     map.setView(point, Math.max(map.getZoom(), 16), { animate: true });
-  }, [coordinates]);
+  }, [coordinates, isMapReady]);
 
   function useCurrentLocation() {
     if (!navigator.geolocation) {
@@ -82,7 +83,8 @@ export function MapPicker() {
           longitude: position.coords.longitude,
           source: "device",
         });
-        setMessage("Ubicación obtenida. Confirma que el pin representa el local y ajústalo si hace falta.");
+        setIsConfirmed(false);
+        setMessage("Ubicación sugerida. Confirma que el pin representa el local y ajústalo si hace falta.");
       },
       () => setMessage("No pudimos acceder a tu ubicación. Puedes fijar el punto tocando el mapa."),
       { enableHighAccuracy: true, maximumAge: 60_000, timeout: 10_000 },
@@ -93,12 +95,17 @@ export function MapPicker() {
     <fieldset className="location-picker">
       <legend>Ubicación del local</legend>
       <p className="field-help">Usa tu ubicación sólo si estás frente al local. El pin se puede ajustar manualmente.</p>
-      <input name="latitude" type="hidden" value={coordinates.latitude} />
-      <input name="longitude" type="hidden" value={coordinates.longitude} />
-      <input name="locationSource" type="hidden" value={coordinates.source} />
-      <input name="locationAccuracyMeters" type="hidden" value={coordinates.accuracy ?? ""} />
+      <input name="latitude" type="hidden" value={coordinates?.latitude ?? ""} />
+      <input name="longitude" type="hidden" value={coordinates?.longitude ?? ""} />
+      <input name="locationSource" type="hidden" value={coordinates?.source ?? ""} />
+      <input name="locationAccuracyMeters" type="hidden" value={coordinates?.accuracy ?? ""} />
+      <input name="locationConfirmed" type="hidden" value={isConfirmed ? "true" : ""} />
       <div className="map-toolbar">
         <button className="button button-secondary" onClick={useCurrentLocation} type="button">Usar mi ubicación</button>
+        <button className="button button-secondary" disabled={!coordinates || isConfirmed} onClick={() => {
+          setIsConfirmed(true);
+          setMessage("Punto confirmado. Ya puedes enviar el aporte.");
+        }} type="button">{isConfirmed ? "Punto confirmado" : "Confirmar este punto"}</button>
         <span aria-live="polite">{message}</span>
       </div>
       <div aria-label="Mapa para ajustar la ubicación del local" className="location-map" ref={mapElement} />
