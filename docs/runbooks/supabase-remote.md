@@ -27,6 +27,8 @@
   Incorpora progreso, errores distinguibles, resumen factual y rondas consecutivas.
 - El acceso vigente usa Magic Link. La URL HTTPS del Worker está configurada como Site URL y como
   redirección autorizada; localhost permanece permitido para desarrollo.
+- `apps/web/wrangler.jsonc` conserva con `keep_vars` las variables administradas desde Cloudflare.
+  Sin esta opción, un despliegue de Wrangler elimina las variables del panel y el sitio responde 500.
 - La aplicación ya no inicia sesiones anónimas. El proveedor anónimo puede desactivarse manualmente
   en Supabase una vez terminada la comprobación de cuentas existentes.
 
