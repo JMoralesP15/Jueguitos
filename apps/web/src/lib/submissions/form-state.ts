@@ -8,6 +8,8 @@ export type SubmissionActionState = {
     location?: string;
     name?: string;
     photo?: string;
+    instagramUrl?: string;
+    websiteUrl?: string;
   };
   message?: string;
 };

@@ -62,6 +62,18 @@ export function SubmissionForm({ action }: SubmissionFormProps) {
           {state.fieldErrors?.address ? <p className="field-error">{state.fieldErrors.address}</p> : null}
         </div>
 
+        <div className="field-group">
+          <label htmlFor="websiteUrl">Página web (opcional)</label>
+          <input aria-invalid={Boolean(state.fieldErrors?.websiteUrl)} id="websiteUrl" name="websiteUrl" placeholder="https://ejemplo.cl" type="url" />
+          {state.fieldErrors?.websiteUrl ? <p className="field-error">{state.fieldErrors.websiteUrl}</p> : null}
+        </div>
+
+        <div className="field-group">
+          <label htmlFor="instagramUrl">Instagram (opcional)</label>
+          <input aria-invalid={Boolean(state.fieldErrors?.instagramUrl)} id="instagramUrl" name="instagramUrl" placeholder="https://instagram.com/ejemplo" type="url" />
+          {state.fieldErrors?.instagramUrl ? <p className="field-error">{state.fieldErrors.instagramUrl}</p> : null}
+        </div>
+
         <MapPicker />
         {state.fieldErrors?.location ? <p className="field-error">{state.fieldErrors.location}</p> : null}
       </section>

@@ -39,7 +39,7 @@ contexto inmediato. El esquema existente no tiene campos de web o redes sociales
 - `item_favorites` asocia la cuenta autenticada con locales activos y usa RLS para que sólo esa
   cuenta pueda consultar, guardar o quitar sus favoritos.
 - `profiles` deja de ser legible públicamente; cada cuenta sólo puede consultar su propio perfil.
-- El feedback sobre direcciones, páginas y redes queda como siguiente paso de datos curados, no como
-  enlaces generados a partir de registros ficticios.
+- Los aportes permiten registrar dirección, página e Instagram opcionales como enlaces HTTPS. Sólo
+  se muestran después de la aprobación; no se generan enlaces a partir de registros ficticios.
 - El ranking sigue siendo de locales. No hay liga, perfil público, puntaje de jugador ni cuadro de
   eliminatorias en esta iteración.

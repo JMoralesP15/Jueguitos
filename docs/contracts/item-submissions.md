@@ -10,6 +10,8 @@ Una cuenta registrada puede enviar:
   category: BusinessCategory;
   city: string;      // 2–80 caracteres
   address: string;   // 5–200 caracteres
+  websiteUrl?: string; // enlace HTTPS verificado, opcional
+  instagramUrl?: string; // enlace HTTPS verificado, opcional
   latitude: number;
   longitude: number;
   locationSource: "device" | "manual";

@@ -20,7 +20,7 @@ function validationState(error: z.ZodError): SubmissionActionState {
 
   for (const issue of error.issues) {
     const field = issue.path[0];
-    if ((field === "address" || field === "category" || field === "city" || field === "name") && !fieldErrors[field]) {
+    if ((field === "address" || field === "category" || field === "city" || field === "instagramUrl" || field === "name" || field === "websiteUrl") && !fieldErrors[field]) {
       fieldErrors[field] = issue.message;
     }
     if ((field === "latitude" || field === "longitude" || field === "locationConfirmed" || field === "locationSource") && !fieldErrors.location) {
@@ -39,12 +39,14 @@ export async function createBusinessSubmissionAction(
     address: formData.get("address"),
     category: formData.get("category"),
     city: formData.get("city"),
+    instagramUrl: formData.get("instagramUrl") || undefined,
     latitude: formData.get("latitude"),
     locationAccuracyMeters: formData.get("locationAccuracyMeters") || undefined,
     locationConfirmed: formData.get("locationConfirmed"),
     locationSource: formData.get("locationSource"),
     longitude: formData.get("longitude"),
     name: formData.get("name"),
+    websiteUrl: formData.get("websiteUrl") || undefined,
   });
 
   if (!input.success) return validationState(input.error);
@@ -96,6 +98,8 @@ export async function createBusinessSubmissionAction(
     location_source: input.data.locationSource,
     longitude: input.data.longitude,
     name: input.data.name,
+    website_url: input.data.websiteUrl || null,
+    instagram_url: input.data.instagramUrl || null,
     status: "pending",
     type: "business_name",
   });
