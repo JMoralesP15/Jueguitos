@@ -2,7 +2,7 @@
 
 ## Estado
 
-Aceptado
+Aceptado. La privacidad del perfil y los favoritos privados se amplían en ADR 0010.
 
 ## Contexto
 
@@ -21,7 +21,7 @@ protege la integridad del juego.
 
 - Los sujetos clasificados son los locales. El rating Elo, victorias, derrotas y posición pertenecen
   a `items`; no se crea un puntaje de jugador.
-- Foto, nombre y comuna describen el local. Durante el P0 la comuna usa el campo existente
+- Foto, nombre, categoría y comuna describen el local. Durante el P0 la comuna usa el campo existente
   `items.city`, sin migración de tabla.
 - Tras cada voto se muestran conteos. El porcentaje se revela sólo al alcanzar cinco votos para esa
   pareja y se presenta como tendencia actual.
@@ -34,8 +34,8 @@ protege la integridad del juego.
 
 ## Consecuencias
 
-- Se mantiene el modelo de datos y no se incorporan perfiles públicos, ligas ni competencia entre
-  personas en P0.
+- No se incorporan perfiles públicos, ligas ni competencia entre personas. ADR 0010 permite un
+  nombre visible privado y una lista privada de favoritos, sin cambiar el sujeto del ranking.
 - El motor necesita distinguir catálogo vacío, ronda completada y catálogo agotado, además de permitir
   cerrar explícitamente una ronda completada.
 - El ranking ofrece una lectura simple de preferencia y deja Elo como detalle técnico secundario.

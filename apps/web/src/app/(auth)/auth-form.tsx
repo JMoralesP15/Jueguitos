@@ -62,7 +62,7 @@ export function AuthForm({ action, nextPath = "/jugar" }: AuthFormProps) {
     <form action={formAction} className="auth-form" noValidate>
       <input name="next" type="hidden" value={nextPath} />
       <div className="form-heading">
-        <p className="eyebrow">Community Manager</p>
+        <p className="eyebrow">El juego de los locales</p>
         <h1>Entrar a jugar</h1>
         <p className="lede">
           Escribe tu correo y te enviaremos un enlace seguro. No necesitas crear una contraseña.

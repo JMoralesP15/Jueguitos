@@ -19,15 +19,21 @@ export default async function PlayPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("onboarding_completed")
+    .select("display_name, onboarding_completed")
     .eq("id", user.id)
     .maybeSingle();
 
   return (
     <>
-      <DuelGame environment={environment} showIntroduction={!profile?.onboarding_completed} />
+      <DuelGame
+        displayName={typeof profile?.display_name === "string" ? profile.display_name : null}
+        environment={environment}
+        showIntroduction={!profile?.onboarding_completed}
+        userId={user.id}
+      />
       <nav className="game-nav" aria-label="Navegación del juego">
         <Link href="/ranking">Ver ranking</Link>
+        <Link href="/cuenta">Mi perfil</Link>
         <Link href="/aportes/nuevo">Aportar un local</Link>
       </nav>
     </>

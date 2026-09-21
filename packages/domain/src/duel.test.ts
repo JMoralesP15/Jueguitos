@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   businessItemSchema,
+  profileDisplayNameSchema,
   castDuelVoteSchema,
   duelPayloadSchema,
   duelVoteResultSchema,
@@ -68,5 +69,20 @@ describe("contrato del motor de duelos", () => {
       round_size: 10,
       votes_cast: 10,
     });
+  });
+});
+
+describe("profileDisplayNameSchema", () => {
+  it("accepts a trimmed display name", () => {
+    expect(profileDisplayNameSchema.parse("  PanConQueso ")).toBe("PanConQueso");
+  });
+
+  it("allows clearing the optional display name", () => {
+    expect(profileDisplayNameSchema.parse("   ")).toBeNull();
+  });
+
+  it("rejects names that are too short or too long", () => {
+    expect(profileDisplayNameSchema.safeParse("A").success).toBe(false);
+    expect(profileDisplayNameSchema.safeParse("x".repeat(33)).success).toBe(false);
   });
 });

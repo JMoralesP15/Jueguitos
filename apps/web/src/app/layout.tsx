@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Community Manager",
-  description: "Juego comunitario para elegir los mejores nombres de locales de Santiago",
+  title: "Duelo de locales",
+  description: "Elige entre dos locales de Santiago y ayuda a descubrir los favoritos de la comunidad.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

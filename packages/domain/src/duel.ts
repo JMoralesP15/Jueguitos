@@ -1,14 +1,24 @@
 import { z } from "zod";
 
 export const businessItemSchema = z.object({
+  address: z.string().trim().max(200).nullable().optional(),
   category: z.string().trim().min(2).max(80),
   city: z.string().trim().min(2).max(80),
   id: z.uuid(),
   imageUrl: z.url(),
+  instagramUrl: z.url().nullable().optional(),
   name: z.string().trim().min(2).max(120),
   rating: z.number(),
   type: z.literal("business_name"),
+  websiteUrl: z.url().nullable().optional(),
 });
+
+export const profileDisplayNameSchema = z
+  .string()
+  .trim()
+  .max(32, "El nombre puede tener hasta 32 caracteres.")
+  .refine((value) => value.length === 0 || value.length >= 2, "Usa al menos 2 caracteres.")
+  .transform((value) => value || null);
 
 export const castDuelVoteSchema = z.object({
   duelId: z.uuid(),

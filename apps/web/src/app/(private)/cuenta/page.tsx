@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { signOutAction } from "../../(auth)/actions";
 import { createClient } from "@/lib/supabase/server";
+import { signOutAction } from "../../(auth)/actions";
+
+import { ProfileForm } from "./profile-form";
 
 export default async function AccountPage() {
   const supabase = await createClient();
@@ -17,22 +19,23 @@ export default async function AccountPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("username, display_name, role")
+    .select("display_name, role")
     .eq("id", user.id)
     .maybeSingle();
 
-  const profileName = profile?.display_name || profile?.username || user.user_metadata.username;
-  const username = typeof profileName === "string" ? profileName : "miembro";
+  const displayName = typeof profile?.display_name === "string" ? profile.display_name : "";
 
   return (
     <main>
       <section className="account-card" aria-labelledby="account-title">
         <p className="eyebrow">Área protegida</p>
-        <h1 id="account-title">Hola, {username}</h1>
+        <h1 id="account-title">{displayName ? `Hola, ${displayName}` : "Tu perfil"}</h1>
         <p className="lede">
-          Esta sección sólo se muestra cuando Supabase valida una sesión activa. Aquí viven tus
-          aportes, comparaciones y preferencias.
+          Personaliza cómo te llamas en tu cuenta y guarda tus locales favoritos. Estas preferencias
+          son privadas y no aparecen en el ranking.
         </p>
+
+        <ProfileForm displayName={displayName} />
 
         <dl className="account-details">
           <div>
@@ -40,12 +43,18 @@ export default async function AccountPage() {
             <dd>{user.email}</dd>
           </div>
           <div>
-            <dt>Nombre público</dt>
-            <dd>{username}</dd>
+            <dt>Nombre visible</dt>
+            <dd>{displayName || "Todavía no elegiste un apodo"}</dd>
           </div>
         </dl>
 
         <div className="account-actions">
+          <Link className="button" href="/cuenta/favoritos">
+            Mis favoritos
+          </Link>
+          <Link className="button button-secondary" href="/jugar">
+            Seguir jugando
+          </Link>
           <Link className="button" href="/aportes">
             Mis aportes
           </Link>

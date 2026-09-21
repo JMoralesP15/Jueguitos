@@ -39,6 +39,11 @@
 - `20260921010000_stabilize_ranking_positions.sql` se aplicó manualmente el 21 de septiembre de
   2026. El ranking ahora usa posiciones únicas y estables incluso cuando todos los locales tienen el
   mismo Elo y la misma cantidad de duelos.
+- La ampliación de feedback se aplicó manualmente el 21 de septiembre de 2026 desde SQL Editor:
+  `item_favorites` con RLS privado para cada cuenta y las columnas opcionales `items.website_url` e
+  `items.instagram_url`, ambas reservadas para enlaces HTTPS verificados. Las consultas fueron
+  idempotentes; los archivos fuente son `20260921020000_add_private_favorites.sql` y
+  `20260921030000_add_public_item_links.sql`.
 - La aplicación ya no inicia sesiones anónimas. El proveedor anónimo puede desactivarse manualmente
   en Supabase una vez terminada la comprobación de cuentas existentes.
 

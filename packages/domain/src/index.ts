@@ -19,6 +19,7 @@ export {
   castDuelVoteSchema,
   duelPayloadSchema,
   duelVoteResultSchema,
+  profileDisplayNameSchema,
   roundSummarySchema,
 } from "./duel";
 

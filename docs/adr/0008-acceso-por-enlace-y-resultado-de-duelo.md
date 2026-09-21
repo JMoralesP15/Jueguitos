@@ -27,8 +27,9 @@ del juego.
 - Después de votar se muestran los conteos históricos y un botón explícito para pasar al siguiente
   duelo. El porcentaje aparece desde cinco votos para evitar presentar una muestra mínima como señal
   estable.
-- Las tarjetas del juego muestran únicamente foto, nombre y comuna. Elo permanece como detalle del
-  ranking y como implementación interna.
+- Las tarjetas del juego muestran foto, nombre, categoría y comuna para que la persona entienda qué
+  tipo de local está comparando. La iteración de feedback de ADR 0010 permite además una señal visual
+  breve al votar, sin presentar Elo como premio personal.
 - El ranking sigue siendo legible sin iniciar sesión, pero la medición de visitas sólo se registra
   cuando existe una cuenta autenticada.
 

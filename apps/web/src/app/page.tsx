@@ -4,11 +4,11 @@ export default function HomePage() {
   return (
     <main>
       <section className="hero" aria-labelledby="page-title">
-        <p className="eyebrow">Community Manager</p>
-        <h1 id="page-title">Nombres de locales, cara a cara.</h1>
+        <p className="eyebrow">El juego de los locales</p>
+        <h1 id="page-title">¿Qué local tiene el nombre más memorable?</h1>
         <p className="lede">
-          Descubre nombres curiosos de negocios reales y elige cuál te parece mejor. Cada elección
-          ayuda a construir el ranking de la comunidad.
+          Compara dos locales de Santiago, descubre qué hace cada uno y elige tu favorito. Cada voto
+          ayuda a crear un ranking hecho por la comunidad.
         </p>
         <div className="hero-actions">
           <Link className="button" href="/jugar">Jugar ahora</Link>
@@ -19,7 +19,7 @@ export default function HomePage() {
       <section aria-labelledby="how-title" className="home-demo">
         <div>
           <p className="eyebrow">Una decisión por vez</p>
-          <h2 id="how-title">Dos nombres entran. Tú eliges cuál queda arriba.</h2>
+          <h2 id="how-title">Dos locales. Una elección. ¡Y seguimos!</h2>
           <p className="lede">Toca una tarjeta, mira la tendencia cuando haya suficientes votos y sigue con el próximo duelo.</p>
         </div>
         <div aria-hidden="true" className="demo-cards">

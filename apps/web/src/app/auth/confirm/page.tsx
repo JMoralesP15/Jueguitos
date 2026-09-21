@@ -28,7 +28,7 @@ export default async function ConfirmPage({ searchParams }: ConfirmPageProps) {
     return (
       <main className="auth-page">
         <section className="auth-success" aria-labelledby="confirm-title">
-          <p className="eyebrow">Community Manager</p>
+          <p className="eyebrow">El juego de los locales</p>
           <h1 id="confirm-title">Este enlace no está completo</h1>
           <p>Solicita un enlace nuevo desde tu correo para entrar a jugar.</p>
           <Link className="button" href={`/ingresar?next=${encodeURIComponent(nextPath)}`}>
@@ -43,7 +43,7 @@ export default async function ConfirmPage({ searchParams }: ConfirmPageProps) {
     <main className="auth-page">
       <section className="auth-success" aria-labelledby="confirm-title">
         <div className="mail-icon" aria-hidden="true">✉</div>
-        <p className="eyebrow">Community Manager</p>
+        <p className="eyebrow">El juego de los locales</p>
         <h1 id="confirm-title">Confirma que quieres entrar</h1>
         <p>Por seguridad, el acceso se completa cuando presionas el botón. Después te llevaremos al juego.</p>
         <form action={confirmMagicLinkAction}>

@@ -20,8 +20,9 @@ permite mantener la sesión, evitar votos repetidos y medir uso de forma pseudó
 }
 ```
 
-Cada tarjeta del juego muestra foto, nombre y comuna. El campo técnico sigue llamándose `city` para
-no cambiar el modelo de datos durante el P0.
+Cada tarjeta del juego muestra foto, nombre, categoría y comuna. El campo técnico sigue llamándose
+`city` para no cambiar el modelo de datos durante el P0. Las direcciones y redes sólo se presentan
+cuando son datos reales revisados; no se fabrican para el catálogo de prueba.
 
 ## Ronda de juego
 
@@ -102,3 +103,5 @@ ranking. No calcula una supuesta coincidencia acumulada con la mayoría.
 El ranking es público y muestra únicamente locales activos: posición, foto, nombre, comuna y
 porcentaje de victorias. Elo y cantidad de duelos quedan disponibles como detalle secundario. No
 expone identidades de votantes ni crea un ranking de personas.
+
+Los favoritos son privados y no alteran el ranking. Consulta [ADR 0010](../adr/0010-feedback-de-experiencia-y-perfil-privado.md).

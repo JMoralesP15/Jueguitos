@@ -2,7 +2,7 @@
 
 ## Dirección vigente
 
-Community Manager es un juego público, mobile-first, de descubrimiento de nombres de locales.
+El producto (repositorio interno `Community Manager`) es un juego público, mobile-first, de descubrimiento de nombres de locales.
 Una persona entra mediante un enlace enviado al correo, elige entre dos nombres y ayuda a producir
 un ranking. Jugar y aportar exigen cuenta; el ranking continúa visible públicamente.
 
@@ -30,9 +30,10 @@ piloto público siguen pendientes 100 a 300 locales, Turnstile y correo configur
 
 ## Principios de secuencia
 
-1. Primero se valida que votar sea entretenido y recurrente.
-2. Luego se habilita que las personas aporten contenido.
-3. Sólo después se agregan funciones sociales, SEO avanzado o monetización.
+1. Primero se valida que votar sea claro, entretenido y recurrente.
+2. Luego se habilita que las personas aporten contenido y se curan fichas reales de locales.
+3. El perfil y los favoritos de la prueba son privados; las funciones sociales públicas, SEO avanzado
+   y monetización requieren validación y decisiones posteriores.
 
 ## MVP-004a — Aporte privado (completado)
 
@@ -47,6 +48,15 @@ piloto público siguen pendientes 100 a 300 locales, Turnstile y correo configur
 - Al aprobar, la foto privada se copia al catálogo público y el local entra al juego.
 
 Siguiente subhito: detección de duplicados, ficha pública de cada local y consultas “cerca de mí”.
+
+## Iteración de feedback de experiencia
+
+- Aclarar la propuesta del juego sin presentar `Community Manager` como nombre comercial.
+- Mostrar la categoría real del local durante cada duelo.
+- Dar una señal breve al votar y una celebración ligera al completar la ronda, sin puntaje personal.
+- Permitir un nombre visible privado y guardar favoritos en la cuenta, protegidos por RLS.
+- Dirección, web y redes sólo se agregan cuando la información real se haya curado; no mostrar
+  ubicaciones ni enlaces inventados para los 20 registros sintéticos.
 
 ## Refuerzo previo a MVP-005
 

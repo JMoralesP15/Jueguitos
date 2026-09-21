@@ -28,8 +28,10 @@ type GameStatus =
   | "voting";
 
 type DuelGameProps = {
+  displayName: string | null;
   environment: PublicEnvironment;
   showIntroduction: boolean;
+  userId: string;
 };
 
 const COMMUNITY_THRESHOLD = 5;
@@ -58,9 +60,10 @@ function getResultMessage(showCommunityResult: boolean, selectedPercentage?: num
   return "Tu elección va contra la tendencia actual.";
 }
 
-export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
+export function DuelGame({ displayName, environment, showIntroduction, userId }: DuelGameProps) {
   const [supabase] = useState(() => createClient(environment));
   const [duel, setDuel] = useState<DuelPayload | null>(null);
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(() => new Set());
   const [introductionVisible, setIntroductionVisible] = useState(showIntroduction);
   const [message, setMessage] = useState("");
   const [result, setResult] = useState<DuelVoteResult | null>(null);
@@ -69,6 +72,61 @@ export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
   const [status, setStatus] = useState<GameStatus>("loading");
 
   const items = useMemo(() => orderedItems(duel), [duel]);
+
+  const enrichDuel = useCallback(async (payload: DuelPayload) => {
+    const ids = [payload.first_item.id, payload.second_item.id];
+    const { data } = await supabase
+      .from("items")
+      .select("id, address, website_url, instagram_url")
+      .in("id", ids);
+    if (!data) return payload;
+
+    const details = new Map(data.map((item) => [item.id, item]));
+    const enrich = (item: BusinessItem): BusinessItem => {
+      const detail = details.get(item.id);
+      return {
+        ...item,
+        address: detail?.address ?? null,
+        instagramUrl: detail?.instagram_url ?? null,
+        websiteUrl: detail?.website_url ?? null,
+      };
+    };
+
+    return { ...payload, first_item: enrich(payload.first_item), second_item: enrich(payload.second_item) };
+  }, [supabase]);
+
+  useEffect(() => {
+    let active = true;
+    async function loadFavorites() {
+      const { data } = await supabase.from("item_favorites").select("item_id").eq("user_id", userId);
+      if (active) setFavoriteIds(new Set((data ?? []).map(({ item_id }) => item_id)));
+    }
+    void loadFavorites();
+    return () => {
+      active = false;
+    };
+  }, [supabase, userId]);
+
+  async function toggleFavorite(itemId: string) {
+    const isFavorite = favoriteIds.has(itemId);
+    setFavoriteIds((current) => {
+      const next = new Set(current);
+      if (isFavorite) next.delete(itemId);
+      else next.add(itemId);
+      return next;
+    });
+    const result = isFavorite
+      ? await supabase.from("item_favorites").delete().eq("user_id", userId).eq("item_id", itemId)
+      : await supabase.from("item_favorites").insert({ user_id: userId, item_id: itemId });
+    if (result.error) {
+      setFavoriteIds((current) => {
+        const next = new Set(current);
+        if (isFavorite) next.add(itemId);
+        else next.delete(itemId);
+        return next;
+      });
+    }
+  }
 
   const loadRoundSummary = useCallback(async () => {
     const { data } = await supabase.rpc("get_current_round_summary");
@@ -114,9 +172,9 @@ export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
     }
 
     setRoundSummary(null);
-    setDuel(parsed.data);
+    setDuel(await enrichDuel(parsed.data));
     setStatus("ready");
-  }, [loadRoundSummary, supabase]);
+  }, [enrichDuel, loadRoundSummary, supabase]);
 
   useEffect(() => {
     let active = true;
@@ -237,7 +295,10 @@ export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
       {duel ? (
         <header className="game-header" aria-labelledby="game-title">
           <div>
-            <p className="game-kicker">¿Cuál tiene mejor nombre?</p>
+          <div>
+            <p className="game-kicker">{displayName ? `¡Vamos, ${displayName}!` : "Elige tu favorito"}</p>
+            <p className="game-kicker game-kicker-subtitle">¿Cuál local te da más ganas de conocer?</p>
+          </div>
             <h1 className="visually-hidden" id="game-title">Duelo de nombres de locales</h1>
             <p className="game-progress-label">Duelo {duel.round_position} de {duel.round_size}</p>
           </div>
@@ -260,36 +321,52 @@ export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
             const selected = selectedItemId === item.id;
             const dimmed = status === "voting" && !selected;
             return (
-              <button
-                aria-pressed={selected}
-                className={`duel-card${selected ? " is-selected" : ""}${dimmed ? " is-dimmed" : ""}`}
-                disabled={status === "voting"}
-                key={item.id}
-                onClick={() => void castVote(item.id)}
-                type="button"
-              >
-                <span className="duel-image-wrap">
-                  <BusinessImage
-                    alt={`Fachada o letrero de ${item.name}`}
-                    className="duel-image"
-                    name={item.name}
-                    priority={index < 2}
-                    sizes="(max-width: 560px) 44vw, 420px"
-                    src={item.imageUrl}
-                  />
-                  {selected ? <span className="choice-badge">Tu elección ✓</span> : null}
-                </span>
-                <span className="duel-card-copy">
-                  <span className="duel-name">{item.name}</span>
-                  <span className="duel-meta">{item.city}</span>
-                </span>
-              </button>
+              <div className="duel-card-shell" key={item.id}>
+                <button
+                  aria-pressed={selected}
+                  className={`duel-card${selected ? " is-selected" : ""}${dimmed ? " is-dimmed" : ""}`}
+                  disabled={status === "voting"}
+                  onClick={() => void castVote(item.id)}
+                  type="button"
+                >
+                  <span className="duel-image-wrap">
+                    <BusinessImage
+                      alt={`Fachada o letrero de ${item.name}`}
+                      className="duel-image"
+                      name={item.name}
+                      priority={index < 2}
+                      sizes="(max-width: 560px) 44vw, 420px"
+                      src={item.imageUrl}
+                    />
+                    {selected ? <span className="choice-badge">Tu elección ✓</span> : null}
+                  </span>
+                  <span className="duel-card-copy">
+                    <span className="category-chip">{item.category}</span>
+                    <span className="duel-name">{item.name}</span>
+                    <span className="duel-description">Un local de {item.category.toLowerCase()}.</span>
+                    <span className="duel-meta">{item.city}</span>
+                    {item.address || item.websiteUrl || item.instagramUrl ? (
+                      <span className="duel-links">Ver ficha del local ↓</span>
+                    ) : null}
+                  </span>
+                </button>
+                <button
+                  aria-label={favoriteIds.has(item.id) ? `Quitar ${item.name} de favoritos` : `Guardar ${item.name} en favoritos`}
+                  className={`favorite-button${favoriteIds.has(item.id) ? " is-favorite" : ""}`}
+                  disabled={status === "voting"}
+                  onClick={() => void toggleFavorite(item.id)}
+                  type="button"
+                >
+                  {favoriteIds.has(item.id) ? "★" : "☆"}
+                </button>
+              </div>
             );
           })}
           {status === "voting" ? <p className="vote-status" role="status">Registrando tu elección…</p> : null}
         </section>
       ) : status === "result" && duel && result ? (
         <section aria-live="polite" aria-labelledby="result-title" className="duel-result">
+          <div aria-hidden="true" className="vote-celebration">✦ ¡Voto guardado! ✦</div>
           <div className="result-heading">
             <p className="eyebrow">Voto registrado</p>
             <h2 id="result-title">{resultMessage}</h2>
@@ -313,8 +390,18 @@ export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
                     {selected ? <span className="choice-badge">Tu elección ✓</span> : null}
                   </span>
                   <div className="result-card-content">
+                    <span className="category-chip">{item.category}</span>
                     <span className="duel-name">{item.name}</span>
+                    <span className="duel-description">Un local de {item.category.toLowerCase()}.</span>
                     <span className="duel-meta">{item.city}</span>
+                    {item.address ? <span className="duel-meta">{item.address}</span> : null}
+                    {item.websiteUrl || item.instagramUrl ? (
+                      <span className="duel-links">
+                        {item.websiteUrl ? <a href={item.websiteUrl} rel="noreferrer" target="_blank">Web</a> : null}
+                        {item.websiteUrl && item.instagramUrl ? " · " : null}
+                        {item.instagramUrl ? <a href={item.instagramUrl} rel="noreferrer" target="_blank">Instagram</a> : null}
+                      </span>
+                    ) : null}
                     {showCommunityResult ? <strong>{itemResult.percentage}%</strong> : null}
                     <small>{itemResult.votes} {itemResult.votes === 1 ? "voto" : "votos"}</small>
                   </div>
@@ -354,6 +441,7 @@ export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
         </section>
       ) : status === "roundComplete" ? (
         <section aria-live="polite" className="round-summary">
+          <div aria-hidden="true" className="round-confetti">🎉 ✨ 🎊</div>
           <p className="eyebrow">Ronda completada</p>
           <h1>{roundSummary ? `Tomaste ${roundSummary.votes_cast} decisiones.` : "Completaste la ronda."}</h1>
           <p className="lede">Tus votos ya actualizaron el ranking de los locales. Puedes seguir jugando sin esperar.</p>
