@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BusinessImage } from "@/components/business-image";
+import { getPublicEnvironment } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 import { RankingViewTracker } from "./ranking-view-tracker";
@@ -17,13 +18,14 @@ type RankingItem = {
 };
 
 export default async function RankingPage() {
+  const environment = getPublicEnvironment();
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("get_public_ranking");
   const ranking = (data ?? []) as RankingItem[];
 
   return (
     <main>
-      <RankingViewTracker />
+      <RankingViewTracker environment={environment} />
       <section className="dashboard-heading" aria-labelledby="ranking-title">
         <p className="eyebrow">Ranking público</p>
         <h1 id="ranking-title">Los nombres favoritos</h1>

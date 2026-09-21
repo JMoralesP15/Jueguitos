@@ -29,6 +29,12 @@
   redirección autorizada; localhost permanece permitido para desarrollo.
 - `apps/web/wrangler.jsonc` conserva con `keep_vars` las variables administradas desde Cloudflare.
   Sin esta opción, un despliegue de Wrangler elimina las variables del panel y el sitio responde 500.
+- Las credenciales públicas de Supabase se leen una sola vez en el servidor y se entregan a los dos
+  componentes interactivos que las necesitan. Por eso basta mantenerlas como variables de ejecución
+  del Worker; no es necesario duplicarlas como variables de compilación de Cloudflare.
+- `20260921010000_stabilize_ranking_positions.sql` se aplicó manualmente el 21 de septiembre de
+  2026. El ranking ahora usa posiciones únicas y estables incluso cuando todos los locales tienen el
+  mismo Elo y la misma cantidad de duelos.
 - La aplicación ya no inicia sesiones anónimas. El proveedor anónimo puede desactivarse manualmente
   en Supabase una vez terminada la comprobación de cuentas existentes.
 

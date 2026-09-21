@@ -7,6 +7,8 @@ const publicEnvironmentSchema = z.object({
 
 const siteUrlSchema = z.url();
 
+export type PublicEnvironment = z.infer<typeof publicEnvironmentSchema>;
+
 export function getPublicEnvironment() {
   return publicEnvironmentSchema.parse({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,

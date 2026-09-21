@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { BusinessImage } from "@/components/business-image";
+import type { PublicEnvironment } from "@/lib/env";
 import { createClient } from "@/lib/supabase/client";
 
 type GameStatus =
@@ -27,6 +28,7 @@ type GameStatus =
   | "voting";
 
 type DuelGameProps = {
+  environment: PublicEnvironment;
   showIntroduction: boolean;
 };
 
@@ -56,8 +58,8 @@ function getResultMessage(showCommunityResult: boolean, selectedPercentage?: num
   return "Tu elección va contra la tendencia actual.";
 }
 
-export function DuelGame({ showIntroduction }: DuelGameProps) {
-  const supabase = useMemo(() => createClient(), []);
+export function DuelGame({ environment, showIntroduction }: DuelGameProps) {
+  const [supabase] = useState(() => createClient(environment));
   const [duel, setDuel] = useState<DuelPayload | null>(null);
   const [introductionVisible, setIntroductionVisible] = useState(showIntroduction);
   const [message, setMessage] = useState("");

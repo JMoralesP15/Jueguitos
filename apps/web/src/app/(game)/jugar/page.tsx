@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { getPublicEnvironment } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 import { DuelGame } from "./duel-game";
 
 export default async function PlayPage() {
+  const environment = getPublicEnvironment();
   const supabase = await createClient();
   const {
     data: { user },
@@ -23,7 +25,7 @@ export default async function PlayPage() {
 
   return (
     <>
-      <DuelGame showIntroduction={!profile?.onboarding_completed} />
+      <DuelGame environment={environment} showIntroduction={!profile?.onboarding_completed} />
       <nav className="game-nav" aria-label="Navegación del juego">
         <Link href="/ranking">Ver ranking</Link>
         <Link href="/aportes/nuevo">Aportar un local</Link>

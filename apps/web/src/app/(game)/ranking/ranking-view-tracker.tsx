@@ -1,11 +1,16 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 
+import type { PublicEnvironment } from "@/lib/env";
 import { createClient } from "@/lib/supabase/client";
 
-export function RankingViewTracker() {
-  const supabase = useMemo(() => createClient(), []);
+type RankingViewTrackerProps = {
+  environment: PublicEnvironment;
+};
+
+export function RankingViewTracker({ environment }: RankingViewTrackerProps) {
+  const [supabase] = useState(() => createClient(environment));
 
   useEffect(() => {
     let active = true;
