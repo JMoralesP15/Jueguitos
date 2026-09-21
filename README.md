@@ -43,7 +43,7 @@ pnpm cf:dry-run
 
 Cloudflare recomienda vinext para proyectos nuevos de Next.js en Workers. La integración permanece en beta, por lo que cada cambio debe pasar `pnpm cf:check` y `pnpm cf:dry-run` antes de fusionarse. La simulación compila el proyecto y valida el paquete final con Wrangler sin publicarlo.
 
-El despliegue requiere `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`. No se ejecuta automáticamente desde ramas o pull requests sin un entorno de GitHub aprobado.
+El despliegue manual requiere `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`. La prueba cerrada se publica con Workers Builds desde la rama `p0-prueba-cerrada-santiago`; la configuración y los secretos se administran en Cloudflare, sin almacenarse en el repositorio.
 
 ## Autenticación
 
