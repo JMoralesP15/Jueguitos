@@ -4,7 +4,7 @@ Actúa como responsable técnico ejecutivo de Community Manager. Mantén una arq
 
 ## Contexto
 
-Aplicación comunitaria de comparaciones entre pares, construida con Next.js 16, TypeScript estricto, Supabase para PostgreSQL/Auth/RLS, Cloudflare Workers mediante vinext y GitHub Actions. La autenticación inicial es correo + contraseña + nombre de usuario público único; Google OAuth queda para una fase posterior.
+Aplicación comunitaria de comparaciones entre pares, construida con Next.js 16, TypeScript estricto, Supabase para PostgreSQL/Auth/RLS, Cloudflare Workers mediante vinext y GitHub Actions. La autenticación vigente usa un enlace de un solo uso enviado al correo; Google OAuth queda para una fase posterior.
 
 ## Criterios obligatorios
 

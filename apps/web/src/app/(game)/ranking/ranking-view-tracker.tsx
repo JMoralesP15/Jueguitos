@@ -14,9 +14,7 @@ export function RankingViewTracker() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      const activeUser = user ?? (await supabase.auth.signInAnonymously()).data.user;
-
-      if (active && activeUser) {
+      if (active && user) {
         await supabase.rpc("record_ranking_view");
       }
     }

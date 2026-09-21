@@ -24,5 +24,11 @@ export const signInCredentialsSchema = z.object({
   password: z.string().min(1),
 });
 
+export const magicLinkCredentialsSchema = z.object({
+  email: z.email("Ingresa un correo válido"),
+  next: z.string().startsWith("/").default("/jugar"),
+});
+
 export type RegisterCredentials = z.infer<typeof registerCredentialsSchema>;
 export type SignInCredentials = z.infer<typeof signInCredentialsSchema>;
+export type MagicLinkCredentials = z.infer<typeof magicLinkCredentialsSchema>;

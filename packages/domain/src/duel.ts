@@ -21,6 +21,16 @@ export const duelPayloadSchema = z.object({
   second_item: businessItemSchema,
 });
 
+export const duelVoteResultSchema = z.object({
+  first_percentage: z.coerce.number().min(0).max(100),
+  first_votes: z.coerce.number().int().nonnegative(),
+  loser_rating: z.coerce.number(),
+  second_percentage: z.coerce.number().min(0).max(100),
+  second_votes: z.coerce.number().int().nonnegative(),
+  winner_rating: z.coerce.number(),
+});
+
 export type BusinessItem = z.infer<typeof businessItemSchema>;
 export type CastDuelVote = z.infer<typeof castDuelVoteSchema>;
 export type DuelPayload = z.infer<typeof duelPayloadSchema>;
+export type DuelVoteResult = z.infer<typeof duelVoteResultSchema>;

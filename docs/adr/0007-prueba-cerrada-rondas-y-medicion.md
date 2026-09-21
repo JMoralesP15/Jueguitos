@@ -2,7 +2,7 @@
 
 ## Estado
 
-Aceptado
+Aceptado, con acceso actualizado por ADR 0008
 
 ## Contexto
 

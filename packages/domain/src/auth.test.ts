@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { registerCredentialsSchema, usernameSchema } from "./auth";
+import { magicLinkCredentialsSchema, registerCredentialsSchema, usernameSchema } from "./auth";
 
 describe("usernameSchema", () => {
   it("normaliza un nombre válido", () => {
@@ -21,5 +21,19 @@ describe("registerCredentialsSchema", () => {
     });
 
     expect(result.success).toBe(false);
+  });
+});
+
+describe("magicLinkCredentialsSchema", () => {
+  it("acepta un correo y una ruta interna", () => {
+    expect(
+      magicLinkCredentialsSchema.safeParse({ email: "persona@example.com", next: "/jugar" }).success,
+    ).toBe(true);
+  });
+
+  it("rechaza una URL externa como destino", () => {
+    expect(
+      magicLinkCredentialsSchema.safeParse({ email: "persona@example.com", next: "https://example.com" }).success,
+    ).toBe(false);
   });
 });

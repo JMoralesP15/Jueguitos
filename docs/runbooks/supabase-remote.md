@@ -19,9 +19,13 @@
 - `20260919000000_add_closed_test_rounds_and_metrics.sql` se aplicó manualmente el 20 de septiembre
   de 2026 y Supabase confirmó `Success. No rows returned`. La verificación posterior confirmó las
   tablas `game_sessions`, `product_events` y la función `record_ranking_view`.
-- La confirmación de correo está desactivada de manera temporal para las pruebas privadas.
-- El ingreso anónimo está activo únicamente para la prueba privada del juego. Antes de abrir el
-  piloto público debe quedar protegido con Turnstile.
+- `20260920000000_require_accounts_magic_link_and_results.sql` se aplicó manualmente el 20 de
+  septiembre de 2026. Se verificaron `profiles.onboarding_completed`, el índice de parejas y la
+  salida de porcentajes de `cast_duel_vote`.
+- El acceso vigente usa Magic Link. La URL HTTPS del Worker debe agregarse a las redirecciones
+  autorizadas inmediatamente después del primer despliegue.
+- La aplicación ya no inicia sesiones anónimas. El proveedor anónimo puede desactivarse manualmente
+  en Supabase una vez terminada la comprobación de cuentas existentes.
 
 ## Regla de migraciones
 
@@ -32,9 +36,9 @@ desde SQL Editor **o** con la CLI, nunca ambas vías.
 ## Antes de un piloto público
 
 1. Configurar SMTP externo y una dirección emisora de un dominio verificado.
-2. Activar confirmación de correo.
+2. Revisar plantillas, límites de Magic Link y entregabilidad.
 3. Configurar el dominio HTTPS final como Site URL y redirect URL.
-4. Activar Turnstile para registro e ingreso anónimo, y revisar límites de cuota.
+4. Activar Turnstile para el acceso público y revisar límites de cuota.
 5. En **Authentication → URL Configuration**, registrar la URL de producción y las URLs de
    prueba autorizadas para recuperación de contraseña. Los Quick Tunnels cambian en cada sesión;
    se agregan sólo para probar y se eliminan después.

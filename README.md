@@ -6,7 +6,7 @@ Base técnica para una plataforma comunitaria de comparaciones entre pares. Esta
 
 - Next.js 16 con App Router y TypeScript estricto.
 - Supabase para PostgreSQL, Auth, Storage y Row Level Security.
-- Registro temporal mediante correo, nombre de usuario público y contraseña.
+- Acceso mediante enlace de un solo uso enviado al correo, sin contraseña.
 - Cloudflare Workers mediante vinext, sujeto al chequeo de compatibilidad por tratarse de una integración beta.
 - pnpm workspaces, GitHub Actions y Dependabot.
 - Sin dependencia de servicios exclusivos de Vercel.
@@ -45,15 +45,15 @@ Cloudflare recomienda vinext para proyectos nuevos de Next.js en Workers. La int
 
 El despliegue requiere `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`. No se ejecuta automáticamente desde ramas o pull requests sin un entorno de GitHub aprobado.
 
-## Autenticación temporal
+## Autenticación
 
-Supabase autentica contraseñas asociadas a correo o teléfono, no a un alias arbitrario. El MVP utilizará:
+El MVP utiliza Supabase Magic Link:
 
-- correo privado para iniciar sesión y recuperar acceso;
-- contraseña administrada por Supabase Auth;
-- nombre de usuario único almacenado en `profiles` y mostrado públicamente.
+- correo privado para recibir un enlace de acceso de un solo uso;
+- sesión persistente administrada por Supabase Auth;
+- alias técnico único en `profiles`, editable en una fase posterior.
 
-No se almacenan hashes de contraseña en tablas propias.
+No se almacenan contraseñas ni correos en tablas de eventos.
 
 ## Documentación
 

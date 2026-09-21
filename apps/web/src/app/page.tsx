@@ -15,8 +15,8 @@ export default function HomePage() {
           <a className="button button-secondary" href="/ranking">
             Ver ranking
           </a>
-          <a className="text-link" href="/registro">
-            Crear cuenta para aportar
+          <a className="text-link" href="/ingresar?next=/aportes/nuevo">
+            Ingresar para aportar
           </a>
         </div>
       </section>

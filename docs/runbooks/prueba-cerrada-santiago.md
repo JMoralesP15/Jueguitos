@@ -17,12 +17,15 @@ autoriza un piloto público.
 
 1. Aplicar la migración `20260919000000_add_closed_test_rounds_and_metrics.sql` una sola vez al
    proyecto alojado de Supabase.
-2. Desplegar el Worker y anotar su URL HTTPS estable `workers.dev`.
-3. En Supabase Auth, configurar esa URL como **Site URL** y URL de retorno autorizada. Mantener la
-   confirmación de correo desactivada para esta cohorte.
-4. Probar desde un teléfono: abrir juego, recargar un duelo, emitir cinco votos, aportar un local,
+2. Aplicar `20260920000000_require_accounts_magic_link_and_results.sql` para activar Magic Link,
+   la introducción por cuenta, parejas únicas y porcentajes.
+3. Desplegar el Worker y anotar su URL HTTPS estable `workers.dev`.
+4. En Supabase Auth, configurar esa URL como **Site URL** y URL de retorno autorizada. Probar el
+   Magic Link con el proveedor de correo incorporado antes de invitar.
+5. Probar desde un teléfono: solicitar enlace, abrirlo, ver la introducción sólo una vez, recargar un
+   duelo, emitir cinco votos, comprobar porcentajes, aportar un local,
    confirmarlo en el mapa, aprobarlo como admin y comprobarlo en juego y ranking.
-5. Confirmar que `/admin/metricas` muestra los conteos de duelo, voto y ranking, además del retorno
+6. Confirmar que `/admin/metricas` muestra los conteos de duelo, voto y ranking, además del retorno
    en días distintos.
 
 ## Durante la prueba
@@ -45,5 +48,5 @@ autoriza un piloto público.
 
 Al completar una semana o alcanzar al menos 50 votos, guardar los conteos y comentarios en el
 informe de avance. Si el juego no alcanza interés suficiente, no ampliar catálogo ni construir
-MVP-005. Si alcanza las señales, preparar el piloto público: dominio propio, SMTP, confirmación de
-correo, Turnstile, límites de abuso y 100–300 locales.
+MVP-005. Si alcanza las señales, preparar el piloto público: dominio propio, SMTP propio, Turnstile,
+límites de abuso y 100–300 locales.

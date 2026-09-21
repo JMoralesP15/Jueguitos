@@ -2,20 +2,20 @@
 
 ## Principio de privacidad
 
-Los eventos se asocian sólo al identificador de sesión anónima de Supabase. No incluyen correo,
+Los eventos se asocian sólo al identificador UUID de la cuenta autenticada en Supabase. No incluyen correo,
 nombre de usuario, dirección, coordenadas ni el texto de una foto.
 
 ## Eventos
 
 | Evento | Momento | Datos asociados |
 | --- | --- | --- |
-| `duel_viewed` | Se crea un duelo nuevo para una ronda. | Identidad anónima y duelo. |
-| `vote_cast` | Se resuelve correctamente un duelo. | Identidad anónima y duelo. |
-| `ranking_viewed` | Se abre el ranking público. | Identidad anónima. |
+| `duel_viewed` | Se crea un duelo nuevo para una ronda. | UUID técnico y duelo. |
+| `vote_cast` | Se resuelve correctamente un duelo. | UUID técnico y duelo. |
+| `ranking_viewed` | Una cuenta autenticada abre el ranking. | UUID técnico. |
 
 Los eventos de duelo y voto se generan dentro de PostgreSQL junto a la operación que representan;
-por tanto, un voto fallido no cuenta como voto. El ranking crea una identidad anónima si el visitante
-no tenía una, únicamente para registrar la vista.
+por tanto, un voto fallido no cuenta como voto. Una visita pública sin sesión al ranking no crea una
+cuenta ni registra un evento.
 
 ## Lectura
 

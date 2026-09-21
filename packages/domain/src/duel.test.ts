@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { businessItemSchema, castDuelVoteSchema } from "./duel";
+import { businessItemSchema, castDuelVoteSchema, duelVoteResultSchema } from "./duel";
 
 describe("contrato del motor de duelos", () => {
   it("acepta un ítem público completo", () => {
@@ -19,5 +19,19 @@ describe("contrato del motor de duelos", () => {
 
   it("exige identificadores UUID para un voto", () => {
     expect(castDuelVoteSchema.safeParse({ duelId: "duelo", winnerId: "ganador" }).success).toBe(false);
+  });
+
+  it("acepta porcentajes devueltos por PostgreSQL", () => {
+    const result = duelVoteResultSchema.parse({
+      first_percentage: "62.5",
+      first_votes: 5,
+      loser_rating: 1492,
+      second_percentage: "37.5",
+      second_votes: 3,
+      winner_rating: 1508,
+    });
+
+    expect(result.first_percentage).toBe(62.5);
+    expect(result.second_votes).toBe(3);
   });
 });

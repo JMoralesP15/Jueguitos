@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { AuthForm } from "../auth-form";
-import { registerAction } from "../actions";
+import { sendMagicLinkAction } from "../actions";
 
 export default function RegisterPage() {
   return (
@@ -9,7 +9,7 @@ export default function RegisterPage() {
       <Link className="back-link" href="/">
         ← Volver al inicio
       </Link>
-      <AuthForm action={registerAction} mode="register" />
+      <AuthForm action={sendMagicLinkAction} />
     </main>
   );
 }

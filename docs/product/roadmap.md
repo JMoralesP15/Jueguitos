@@ -3,8 +3,8 @@
 ## Dirección vigente
 
 Community Manager es un juego público, mobile-first, de descubrimiento de nombres de locales.
-Una persona entra, elige entre dos nombres y ayuda a producir un ranking. Votar no exige crear una
-cuenta; aportar un descubrimiento sí.
+Una persona entra mediante un enlace enviado al correo, elige entre dos nombres y ayuda a producir
+un ranking. Jugar y aportar exigen cuenta; el ranking continúa visible públicamente.
 
 ## Estado de fases
 
@@ -20,7 +20,7 @@ cuenta; aportar un descubrimiento sí.
 
 - Entidad genérica `item`, iniciando con `business_name`.
 - Duelos de exactamente dos ítems y una selección por duelo.
-- Identidad anónima de Supabase para votar sin correo ni contraseña.
+- Cuenta de Supabase mediante Magic Link, sin contraseña.
 - Función PostgreSQL atómica que registra el voto y actualiza Elo con K=32.
 - Ranking público con rating, victorias, derrotas y número de duelos.
 - Sin subida de contenido, comentarios, geolocalización automática ni matchmaking personalizado.
@@ -58,6 +58,7 @@ Siguiente subhito: detección de duplicados, ficha pública de cada local y cons
 
 - Una ronda dura 30 minutos de inactividad: no repite locales dentro de la ronda y recupera un duelo
   abierto tras una recarga.
+- Una cuenta no vuelve a votar la misma pareja y ve porcentajes históricos después de cada voto.
 - La ubicación debe ser confirmada de forma explícita; no existe un pin por defecto.
 - El enlace estable `workers.dev` se comparte sólo con 10 a 15 personas invitadas. No es un piloto
   público ni sustituye un dominio propio.
@@ -68,5 +69,5 @@ Siguiente subhito: detección de duplicados, ficha pública de cada local y cons
 
 - Catálogo curado inicial de 100 a 300 ítems con derecho de uso de sus imágenes.
 - Instrumentación de `duel_viewed`, `vote_cast` y `ranking_viewed`.
-- Confirmación de correo, Turnstile y límites de abuso activos antes de abrir el registro público.
+- SMTP propio, Turnstile y límites de abuso activos antes de abrir el registro público.
 - Prueba concentrada en una zona inicial, idealmente Santiago.

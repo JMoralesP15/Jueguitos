@@ -1,25 +1,21 @@
 import Link from "next/link";
 
 import { AuthForm } from "../auth-form";
-import { signInAction } from "../actions";
+import { sendMagicLinkAction } from "../actions";
 
 type SignInPageProps = {
-  searchParams: Promise<{ error?: string; origen?: string; registro?: string; recuperacion?: string }>;
+  searchParams: Promise<{ error?: string; next?: string; origen?: string }>;
 };
 
 export default async function SignInPage({ searchParams }: SignInPageProps) {
-  const { error, origen, registro, recuperacion } = await searchParams;
+  const { error, next, origen } = await searchParams;
+  const nextPath = next?.startsWith("/") && !next.startsWith("//") ? next : "/jugar";
 
   return (
     <main className="auth-page">
       <Link className="back-link" href="/">
         ← Volver al inicio
       </Link>
-      {registro === "confirmar" ? (
-        <p className="notice" role="status">
-          Revisa tu correo para confirmar la cuenta antes de ingresar.
-        </p>
-      ) : null}
       {origen === "cuenta" ? (
         <p className="notice" role="status">
           Ingresa para acceder a tu área privada.
@@ -31,8 +27,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
           cuenta nuevamente.
         </p>
       ) : null}
-      {recuperacion === "ok" ? <p className="notice" role="status">Tu contraseña fue actualizada. Ya puedes ingresar.</p> : null}
-      <AuthForm action={signInAction} mode="sign-in" />
+      <AuthForm action={sendMagicLinkAction} nextPath={nextPath} />
     </main>
   );
 }

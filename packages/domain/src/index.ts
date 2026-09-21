@@ -1,5 +1,6 @@
 export {
   passwordSchema,
+  magicLinkCredentialsSchema,
   registerCredentialsSchema,
   signInCredentialsSchema,
   usernameSchema,
@@ -13,7 +14,7 @@ export {
   createComparisonSchema,
 } from "./comparison";
 
-export { businessItemSchema, castDuelVoteSchema, duelPayloadSchema } from "./duel";
+export { businessItemSchema, castDuelVoteSchema, duelPayloadSchema, duelVoteResultSchema } from "./duel";
 
 export {
   businessCategories,
@@ -22,6 +23,7 @@ export {
 } from "./submission";
 
 export type { RegisterCredentials, SignInCredentials } from "./auth";
+export type { MagicLinkCredentials } from "./auth";
 export type { CastVote, CreateComparison } from "./comparison";
-export type { BusinessItem, CastDuelVote, DuelPayload } from "./duel";
+export type { BusinessItem, CastDuelVote, DuelPayload, DuelVoteResult } from "./duel";
 export type { BusinessCategory, CreateBusinessSubmission } from "./submission";

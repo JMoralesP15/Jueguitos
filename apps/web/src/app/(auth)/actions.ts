@@ -1,6 +1,6 @@
 "use server";
 
-import { registerCredentialsSchema, signInCredentialsSchema } from "@mvp/domain";
+import { magicLinkCredentialsSchema, registerCredentialsSchema, signInCredentialsSchema } from "@mvp/domain";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { z } from "zod";
@@ -85,6 +85,45 @@ export async function signInAction(
   }
 
   redirect("/cuenta");
+}
+
+export async function sendMagicLinkAction(
+  _previousState: AuthActionState,
+  formData: FormData,
+): Promise<AuthActionState> {
+  const credentials = magicLinkCredentialsSchema.safeParse({
+    email: formData.get("email"),
+    next: formData.get("next") || "/jugar",
+  });
+
+  if (!credentials.success) {
+    return validationState(credentials.error);
+  }
+
+  const origin = (await headers()).get("origin");
+  if (!origin) {
+    return { message: "No pudimos preparar el enlace. Inténtalo nuevamente." };
+  }
+
+  const supabase = await createClient();
+  const callback = new URL("/auth/confirm", origin);
+  callback.searchParams.set("next", credentials.data.next);
+  const { error } = await supabase.auth.signInWithOtp({
+    email: credentials.data.email,
+    options: {
+      emailRedirectTo: callback.toString(),
+      shouldCreateUser: true,
+    },
+  });
+
+  if (error) {
+    return { message: "No pudimos enviar el enlace. Espera un momento e inténtalo nuevamente." };
+  }
+
+  return {
+    message: "Revisa tu correo. El enlace te llevará directamente al juego.",
+    success: true,
+  };
 }
 
 export async function requestPasswordResetAction(

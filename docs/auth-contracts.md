@@ -1,41 +1,46 @@
 # Contratos de autenticación del MVP
 
-## Registro
+> ADR 0008 reemplaza el flujo original de correo y contraseña.
+
+## Acceso por enlace
 
 Entrada:
 
 - `email`: correo válido y privado.
-- `username`: alias público único, entre 3 y 24 caracteres, en minúsculas; admite letras, números y `_`.
-- `password`: entre 10 y 128 caracteres.
+- `next`: ruta interna permitida; por defecto `/jugar`.
 
-Supabase Auth almacena y verifica la contraseña. El cliente envía `username` como metadata de registro y un trigger crea `public.profiles`. La base de datos vuelve a validar formato y unicidad.
-
-## Inicio de sesión
-
-Entrada: `email` y `password`. El nombre de usuario no se utiliza como credencial en esta fase para no construir un sistema propio de resolución de identidad ni exponer correos en tablas públicas.
+Supabase envía un Magic Link y crea la cuenta en la primera visita. Un trigger genera un alias
+técnico único sin exponer el correo. La misma pantalla sirve para crear y recuperar una cuenta.
 
 ## Sesión y autorización
 
 - Las cookies de sesión se actualizan en `proxy.ts`.
-- Las operaciones de servidor deben resolver la identidad con Supabase Auth.
-- Las tablas de negocio usarán RLS; nunca se confiará en un `user_id` enviado por el navegador.
-- `profiles` es legible públicamente, pero cada usuario sólo puede modificar su propia fila.
+- Las operaciones de servidor resuelven la identidad con Supabase Auth.
+- Jugar y aportar requieren sesión; el ranking continúa siendo legible públicamente.
+- Las tablas de negocio usan RLS y nunca confían en un `user_id` enviado por el navegador.
+- `profiles` es legible públicamente, pero cada persona sólo puede modificar su propia fila.
+- La explicación inicial se marca una vez por cuenta mediante `profiles.onboarding_completed`.
+
+## Callback y redirecciones
+
+La aplicación incluye `GET /auth/confirm`, que acepta el `code` o `token_hash` de Supabase, crea la
+cookie de sesión y redirige únicamente a una ruta interna segura.
+
+La plantilla **Magic Link** debe respetar la dirección enviada por la aplicación:
+
+```html
+{{ .RedirectTo }}
+```
+
+Durante desarrollo se autoriza `http://localhost:3000/auth/confirm`. Para la prueba se añade la URL
+HTTPS exacta del Worker sin retirar localhost.
+
+## Operación de correo
+
+El proveedor incorporado de Supabase basta para la cohorte cerrada de 10 a 15 personas. Antes del
+piloto público se configura SMTP propio, se revisan límites de envío y se activa Turnstile.
 
 ## Evolución futura
 
-Google OAuth puede añadirse como otro proveedor de la misma cuenta. Antes de activarlo se debe definir cómo se asigna o solicita el `username` cuando el proveedor no lo entrega.
-
-En el proyecto alojado de Supabase se debe activar la confirmación de correo antes de producción. Localmente queda desactivada para no bloquear el desarrollo con correo saliente.
-
-## Confirmación de correo alojada
-
-La aplicación incluye `GET /auth/confirm`, que verifica el `token_hash` de Supabase en el servidor,
-crea la cookie de sesión y redirige a `/cuenta`. Al activar confirmación de correo en el proyecto
-alojado, la plantilla **Confirm signup** debe usar:
-
-```html
-{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email
-```
-
-Durante el desarrollo con el proyecto alojado, configura `http://localhost:3000` como **Site URL**.
-Antes de publicar, se reemplaza por el dominio HTTPS final y se añade también como URL de redirección.
+El alias técnico puede reemplazarse por un nombre público elegido durante una edición de perfil.
+Google OAuth puede añadirse después enlazando la identidad existente.

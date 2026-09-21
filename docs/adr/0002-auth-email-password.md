@@ -2,7 +2,7 @@
 
 ## Estado
 
-Aceptado para el MVP
+Reemplazado por ADR 0008 para el flujo principal
 
 ## Contexto
 

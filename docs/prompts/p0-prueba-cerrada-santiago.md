@@ -1,5 +1,8 @@
 # Prompt técnico ejecutivo — P0: prueba cerrada en Santiago
 
+> Conservado como registro del incremento anterior. ADR 0008 y
+> `p0-acceso-y-feedback-de-duelo.md` reemplazan sus decisiones de autenticación y correo.
+
 Actúa como responsable técnico ejecutivo de Community Manager. Ejecuta el incremento más pequeño
 que permita validar si el juego de nombres de locales resulta entretenido en una cohorte cerrada de
 10 a 15 personas de Santiago.
