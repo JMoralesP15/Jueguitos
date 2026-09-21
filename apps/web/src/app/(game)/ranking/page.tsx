@@ -9,6 +9,7 @@ type RankingItem = {
   city: string;
   duel_count: number;
   image_url: string;
+  item_id: string;
   name: string;
   rank_position: number;
   rating: number;
@@ -40,7 +41,7 @@ export default async function RankingPage() {
         ) : ranking.length ? (
           <ol className="ranking-list">
             {ranking.map((item) => (
-              <li className={item.rank_position <= 3 ? "is-podium" : undefined} key={item.rank_position}>
+              <li className={item.rank_position <= 3 ? "is-podium" : undefined} key={item.item_id}>
                 <span className="ranking-position" aria-label={`Posición ${item.rank_position}`}>
                   {item.rank_position === 1 ? "🥇" : item.rank_position === 2 ? "🥈" : item.rank_position === 3 ? "🥉" : `#${item.rank_position}`}
                 </span>

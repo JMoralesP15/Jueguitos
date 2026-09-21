@@ -8,6 +8,9 @@ El set sirve para comprobar Magic Link, rondas de 10 duelos, resultados, ranking
 usarse para una prueba de preferencia con participantes reales, porque no representa negocios ni
 fotografías reales.
 
+Aplicar también `20260921010000_stabilize_ranking_positions.sql`: como todos los registros parten
+con el mismo Elo, esa migración aporta un desempate técnico estable y evita posiciones duplicadas.
+
 La carga es idempotente: puede ejecutarse más de una vez sin duplicar filas. Antes de incorporar el
 catálogo real, retirar el set con:
 
