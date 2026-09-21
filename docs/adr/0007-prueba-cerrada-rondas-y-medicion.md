@@ -17,11 +17,12 @@ piloto público; esta excepción no autoriza publicar el enlace ni recibir tráf
 
 ## Decisión
 
-- Una ronda dura hasta 30 minutos de inactividad de la identidad anónima de Supabase.
+- Una ronda abandonada dura hasta 30 minutos de inactividad de la cuenta autenticada de Supabase.
 - Dentro de una ronda, un ítem no se repite. Si la persona recarga durante la ronda, recibe el mismo
   duelo abierto en lugar de consumir otro par.
-- Al iniciar una nueva ronda, los ítems pueden volver a participar. Esto permite medir retorno sin
-  añadir matchmaking ni un catálogo grande antes de validar el juego.
+- Al completar una ronda se puede iniciar otra de inmediato. Los ítems pueden volver a participar,
+  pero una cuenta nunca vuelve a resolver la misma pareja. Esto permite continuar sin añadir
+  matchmaking ni un catálogo grande antes de validar el juego.
 - El mapa no enviará una ubicación inicial implícita. La persona puede sugerir su posición desde el
   dispositivo o elegir un punto manualmente, y debe confirmarlo antes de aportar.
 - Se registrarán sólo eventos mínimos y pseudónimos: `duel_viewed`, `vote_cast` y

@@ -19,13 +19,18 @@ autoriza un piloto público.
    proyecto alojado de Supabase.
 2. Aplicar `20260920000000_require_accounts_magic_link_and_results.sql` para activar Magic Link,
    la introducción por cuenta, parejas únicas y porcentajes.
-3. Desplegar el Worker y anotar su URL HTTPS estable `workers.dev`.
-4. En Supabase Auth, configurar esa URL como **Site URL** y URL de retorno autorizada. Probar el
+3. Aplicar `20260921000000_refine_p0_rounds.sql` para activar progreso, estados distinguibles y
+   rondas consecutivas. No aplicar la interfaz nueva antes de esta migración.
+4. Desplegar el Worker y anotar su URL HTTPS estable `workers.dev`. Configurar esa misma URL como
+   `NEXT_PUBLIC_SITE_URL` en Cloudflare.
+5. En Supabase Auth, configurar esa URL como **Site URL** y URL de retorno autorizada. Probar el
    Magic Link con el proveedor de correo incorporado antes de invitar.
-5. Probar desde un teléfono: solicitar enlace, abrirlo, ver la introducción sólo una vez, recargar un
-   duelo, emitir cinco votos, comprobar porcentajes, aportar un local,
-   confirmarlo en el mapa, aprobarlo como admin y comprobarlo en juego y ranking.
-6. Confirmar que `/admin/metricas` muestra los conteos de duelo, voto y ranking, además del retorno
+6. Probar desde un teléfono: solicitar enlace, abrirlo, ver la introducción sólo una vez, recargar un
+   duelo, completar una ronda, iniciar otra sin espera, comprobar que una pareja no se repite, aportar
+   un local, confirmarlo en el mapa, aprobarlo como admin y comprobarlo en juego y ranking.
+7. Confirmar que una pareja con menos de cinco votos no muestre porcentaje y que una con cinco o más
+   sí lo muestre.
+8. Confirmar que `/admin/metricas` muestra los conteos de duelo, voto y ranking, además del retorno
    en días distintos.
 
 ## Durante la prueba
@@ -33,7 +38,8 @@ autoriza un piloto público.
 - Compartir el enlace sólo por mensaje directo.
 - No corregir el ranking manualmente ni modificar votos.
 - Revisar aportes al menos una vez por día y aprobar sólo los que tengan foto y ubicación válidas.
-- Registrar comentarios cualitativos: qué confundió, qué dio risa, y si la persona volvería a jugar.
+- Registrar comentarios cualitativos: qué confundió, qué dio risa, si entendió que elegía nombres de
+  locales y si volvería a jugar.
 
 ## Señales a revisar
 

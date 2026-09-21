@@ -12,12 +12,14 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 ## Arquitectura
 
 - [Decisión: alojamiento en Cloudflare](adr/0001-hosting-cloudflare.md)
-- [Decisión: correo, contraseña y nombre de usuario](adr/0002-auth-email-password.md)
+- [Decisión reemplazada: correo, contraseña y nombre de usuario](adr/0002-auth-email-password.md)
 - [Decisión: monolito modular y Supabase](adr/0003-monolith-supabase.md)
 - [Decisión: motor público de duelos](adr/0004-motor-publico-de-duelos.md)
 - [Decisión: aportes privados de locales](adr/0005-aportes-privados-de-locales.md)
 - [Decisión: ubicación y moderación](adr/0006-ubicacion-y-moderacion-de-locales.md)
 - [Decisión: prueba cerrada, rondas y medición](adr/0007-prueba-cerrada-rondas-y-medicion.md)
+- [Decisión: acceso por enlace y resultado de duelo](adr/0008-acceso-por-enlace-y-resultado-de-duelo.md)
+- [Decisión: el juego clasifica locales, no personas](adr/0009-ranking-de-locales-y-continuidad-de-rondas.md)
 - [Notas de arquitectura](architecture/README.md)
 
 ## Producto y contratos

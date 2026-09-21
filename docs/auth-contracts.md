@@ -35,6 +35,10 @@ La plantilla **Magic Link** debe respetar la dirección enviada por la aplicaci�
 Durante desarrollo se autoriza `http://localhost:3000/auth/confirm`. Para la prueba se añade la URL
 HTTPS exacta del Worker sin retirar localhost.
 
+Las rutas históricas de contraseña (`/registro`, `/recuperar-contrasena` y
+`/actualizar-contrasena`) permanecen temporalmente en el código para no mezclar su retiro con la
+prueba P0, pero no forman parte de la navegación ni del flujo vigente. ADR 0008 es la fuente actual.
+
 ## Operación de correo
 
 El proveedor incorporado de Supabase basta para la cohorte cerrada de 10 a 15 personas. Antes del

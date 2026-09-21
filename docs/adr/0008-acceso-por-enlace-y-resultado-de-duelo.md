@@ -24,8 +24,9 @@ del juego.
 - La explicación del juego se muestra una sola vez por cuenta y se guarda en `profiles`.
 - Una persona sólo puede resolver una vez la misma pareja de locales, aunque cambie el orden. Las
   rondas de 30 minutos siguen evitando que un local se repita dentro de una sesión.
-- Después de votar se muestran los porcentajes históricos de preferencia entre esos dos locales y un
-  botón explícito para pasar al siguiente duelo.
+- Después de votar se muestran los conteos históricos y un botón explícito para pasar al siguiente
+  duelo. El porcentaje aparece desde cinco votos para evitar presentar una muestra mínima como señal
+  estable.
 - Las tarjetas del juego muestran únicamente foto, nombre y comuna. Elo permanece como detalle del
   ranking y como implementación interna.
 - El ranking sigue siendo legible sin iniciar sesión, pero la medición de visitas sólo se registra
@@ -45,4 +46,4 @@ del juego.
   público se deberá configurar SMTP propio y revisar límites de envío.
 - No se guardan correos en `product_events`; la asociación sigue siendo un UUID técnico.
 - Al agotarse las parejas únicas de una cuenta, el juego informa que completó el catálogo disponible.
-
+- ADR 0009 aclara que el puntaje pertenece a los locales y permite encadenar rondas sin espera.

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { approveSubmissionAction, hideSubmissionAction } from "./actions";
+import { BusinessImage } from "@/components/business-image";
 import { createClient } from "@/lib/supabase/server";
+
+import { approveSubmissionAction, hideSubmissionAction } from "./actions";
 
 type Submission = {
   address: string | null;
@@ -71,7 +73,15 @@ export default async function AdminSubmissionsPage({ searchParams }: AdminSubmis
           <ul className="review-list">
             {reviewed.map((submission) => (
               <li key={submission.id}>
-                {submission.imageUrl ? <img alt={`Foto enviada de ${submission.name}`} className="review-image" src={submission.imageUrl} /> : null}
+                {submission.imageUrl ? (
+                  <BusinessImage
+                    alt={`Foto enviada de ${submission.name}`}
+                    className="review-image"
+                    name={submission.name}
+                    sizes="(max-width: 560px) 100vw, 280px"
+                    src={submission.imageUrl}
+                  />
+                ) : null}
                 <div className="review-content">
                   <p className="comparison-status">Pendiente de revisión</p>
                   <h3>{submission.name}</h3>

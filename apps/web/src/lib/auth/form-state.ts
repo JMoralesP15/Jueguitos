@@ -1,8 +1,10 @@
 export type AuthFieldName = "email" | "username" | "password";
 
 export type AuthActionState = {
+  email?: string;
   fieldErrors?: Partial<Record<AuthFieldName, string>>;
   message?: string;
+  sentAt?: number;
   success?: boolean;
 };
 

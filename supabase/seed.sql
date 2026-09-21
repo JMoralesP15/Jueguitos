@@ -1,0 +1,3 @@
+-- El P0 no inventa locales ni reutiliza fotos sin permiso.
+-- El catálogo alojado se carga mediante /aportes/nuevo y se publica desde /admin/aportes.
+-- Este archivo se conserva para que `supabase db reset` sea reproducible sin datos ficticios.

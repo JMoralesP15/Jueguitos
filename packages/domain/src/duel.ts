@@ -18,6 +18,8 @@ export const castDuelVoteSchema = z.object({
 export const duelPayloadSchema = z.object({
   duel_id: z.uuid(),
   first_item: businessItemSchema,
+  round_position: z.coerce.number().int().positive(),
+  round_size: z.coerce.number().int().positive().max(10),
   second_item: businessItemSchema,
 });
 
@@ -30,7 +32,13 @@ export const duelVoteResultSchema = z.object({
   winner_rating: z.coerce.number(),
 });
 
+export const roundSummarySchema = z.object({
+  round_size: z.coerce.number().int().positive().max(10),
+  votes_cast: z.coerce.number().int().nonnegative(),
+});
+
 export type BusinessItem = z.infer<typeof businessItemSchema>;
 export type CastDuelVote = z.infer<typeof castDuelVoteSchema>;
 export type DuelPayload = z.infer<typeof duelPayloadSchema>;
 export type DuelVoteResult = z.infer<typeof duelVoteResultSchema>;
+export type RoundSummary = z.infer<typeof roundSummarySchema>;

@@ -23,7 +23,8 @@ function extensionFromPath(path: string) {
   return match?.[1]?.toLowerCase() ?? "jpg";
 }
 
-export async function approveSubmissionAction(itemId: string, _formData: FormData): Promise<void> {
+export async function approveSubmissionAction(itemId: string, formData: FormData): Promise<void> {
+  void formData;
   const supabase = await requireAdmin();
   const { data: item, error: itemError } = await supabase
     .from("items")
@@ -63,7 +64,8 @@ export async function approveSubmissionAction(itemId: string, _formData: FormDat
   redirect("/admin/aportes?aprobado=1");
 }
 
-export async function hideSubmissionAction(itemId: string, _formData: FormData): Promise<void> {
+export async function hideSubmissionAction(itemId: string, formData: FormData): Promise<void> {
+  void formData;
   const supabase = await requireAdmin();
   const { data: item, error } = await supabase
     .from("items")

@@ -22,8 +22,11 @@
 - `20260920000000_require_accounts_magic_link_and_results.sql` se aplicó manualmente el 20 de
   septiembre de 2026. Se verificaron `profiles.onboarding_completed`, el índice de parejas y la
   salida de porcentajes de `cast_duel_vote`.
-- El acceso vigente usa Magic Link. La URL HTTPS del Worker debe agregarse a las redirecciones
-  autorizadas inmediatamente después del primer despliegue.
+- `20260921000000_refine_p0_rounds.sql` se validó primero dentro de una transacción reversible y se
+  aplicó manualmente el 21 de septiembre de 2026. Supabase confirmó `Success. No rows returned`.
+  Incorpora progreso, errores distinguibles, resumen factual y rondas consecutivas.
+- El acceso vigente usa Magic Link. La URL HTTPS del Worker está configurada como Site URL y como
+  redirección autorizada; localhost permanece permitido para desarrollo.
 - La aplicación ya no inicia sesiones anónimas. El proveedor anónimo puede desactivarse manualmente
   en Supabase una vez terminada la comprobación de cuentas existentes.
 
@@ -31,7 +34,9 @@
 
 No ejecutar `supabase db push` sobre la migración inicial hasta vincular la CLI y reconciliar el
 historial remoto. Para cambios posteriores, usar una migración SQL nueva y aplicarla una sola vez:
-desde SQL Editor **o** con la CLI, nunca ambas vías.
+desde SQL Editor **o** con la CLI, nunca ambas vías. La migración del 21 de septiembre usa reemplazo
+idempotente para las funciones auxiliares, pero eso no sustituye reconciliar
+`supabase_migrations` antes de vincular la CLI.
 
 ## Antes de un piloto público
 

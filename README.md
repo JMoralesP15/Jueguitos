@@ -1,6 +1,6 @@
 # Community Manager
 
-Base técnica para una plataforma comunitaria de comparaciones entre pares. Esta fase contiene las decisiones de arquitectura, el monorepo, la integración inicial con Supabase, la ruta de despliegue en Cloudflare y la automatización de GitHub.
+Juego comunitario para descubrir qué nombres de locales de Santiago generan mayor preferencia. Esta fase contiene las decisiones de producto y arquitectura, el monorepo, la integración con Supabase, la ruta de despliegue en Cloudflare y la automatización de GitHub.
 
 ## Decisiones actuales
 

@@ -4,6 +4,9 @@
 **Estado:** construcción funcional; pendiente de validación con usuarios reales.  
 **Producto:** juego público, diseñado primero para móvil, donde las personas comparan nombres de locales. Los aportes y la moderación alimentan ese catálogo.
 
+> Documento histórico cerrado el 19 de septiembre. Para el estado vigente de acceso y jugabilidad,
+> prevalecen ADR 0008, ADR 0009 y el runbook de la prueba cerrada.
+
 ## Resumen ejecutivo
 
 La base del MVP está construida: registro e ingreso por correo y contraseña, perfiles, área protegida, motor de duelos con ranking, aportes privados con foto y ubicación, panel administrativo y una interfaz móvil de tono juvenil. El repositorio, GitHub y Obsidian comparten los mismos archivos Markdown, de modo que no hay que importar documentos manualmente en cada sesión.

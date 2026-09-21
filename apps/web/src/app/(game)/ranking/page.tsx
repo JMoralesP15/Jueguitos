@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BusinessImage } from "@/components/business-image";
 import { createClient } from "@/lib/supabase/server";
 
 import { RankingViewTracker } from "./ranking-view-tracker";
@@ -39,12 +40,25 @@ export default async function RankingPage() {
         ) : ranking.length ? (
           <ol className="ranking-list">
             {ranking.map((item) => (
-              <li key={item.rank_position}>
-                <span className="ranking-position">#{item.rank_position}</span>
-                <img alt="" className="ranking-image" src={item.image_url} />
-                <div>
+              <li className={item.rank_position <= 3 ? "is-podium" : undefined} key={item.rank_position}>
+                <span className="ranking-position" aria-label={`Posición ${item.rank_position}`}>
+                  {item.rank_position === 1 ? "🥇" : item.rank_position === 2 ? "🥈" : item.rank_position === 3 ? "🥉" : `#${item.rank_position}`}
+                </span>
+                <BusinessImage
+                  alt={`Foto de ${item.name}`}
+                  className="ranking-image"
+                  name={item.name}
+                  sizes="64px"
+                  src={item.image_url}
+                />
+                <div className="ranking-copy">
                   <h3>{item.name}</h3>
-                  <p>{item.city} · {item.rating} Elo · {item.duel_count} duelos · {item.win_rate}% victorias</p>
+                  <p>{item.city}</p>
+                  <strong>Gana el {Math.round(item.win_rate)}% de sus duelos</strong>
+                  <details>
+                    <summary>Ver detalle</summary>
+                    <p>{Math.round(item.rating)} Elo · {item.duel_count} duelos</p>
+                  </details>
                 </div>
               </li>
             ))}

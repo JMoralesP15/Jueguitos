@@ -17,6 +17,10 @@ Los eventos de duelo y voto se generan dentro de PostgreSQL junto a la operació
 por tanto, un voto fallido no cuenta como voto. Una visita pública sin sesión al ranking no crea una
 cuenta ni registra un evento.
 
+Las rondas adicionales se observan como señal exploratoria a partir de `game_sessions`: se resta la
+primera ronda de cada cuenta al total de rondas creadas. No se incorpora un evento nuevo ni una meta
+hasta contar con evidencia de la prueba cerrada.
+
 ## Lectura
 
 Sólo el rol `admin` puede leer los eventos agregados de la prueba. Los visitantes no pueden leer los

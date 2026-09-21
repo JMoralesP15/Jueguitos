@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import Link from "next/link";
+import { useActionState, useEffect, useState } from "react";
 
 import {
   initialAuthActionState,
@@ -14,6 +15,48 @@ type AuthFormProps = {
 
 export function AuthForm({ action, nextPath = "/jugar" }: AuthFormProps) {
   const [state, formAction, isPending] = useActionState(action, initialAuthActionState);
+  const [secondsRemaining, setSecondsRemaining] = useState(0);
+
+  useEffect(() => {
+    if (!state.sentAt) return;
+
+    let interval = 0;
+
+    function updateCountdown() {
+      const elapsedSeconds = Math.floor((Date.now() - (state.sentAt ?? 0)) / 1000);
+      const nextValue = Math.max(0, 60 - elapsedSeconds);
+      setSecondsRemaining(nextValue);
+      if (nextValue === 0) window.clearInterval(interval);
+    }
+
+    interval = window.setInterval(updateCountdown, 1000);
+    updateCountdown();
+    return () => window.clearInterval(interval);
+  }, [state.sentAt]);
+
+  if (state.success && state.email) {
+    return (
+      <section className="auth-success" aria-labelledby="email-sent-title">
+        <div className="mail-icon" aria-hidden="true">✉</div>
+        <p className="eyebrow">Enlace enviado</p>
+        <h1 id="email-sent-title">Revisa tu correo</h1>
+        <p className="lede">Enviamos el acceso a <strong>{state.email}</strong>. El enlace te llevará directamente al juego.</p>
+        <p className="field-help">Si no aparece en unos minutos, revisa spam. El enlace vence por seguridad.</p>
+        <form action={formAction}>
+          <input name="email" type="hidden" value={state.email} />
+          <input name="next" type="hidden" value={nextPath} />
+          <button className="button button-secondary" disabled={isPending || secondsRemaining > 0} type="submit">
+            {isPending
+              ? "Reenviando…"
+              : secondsRemaining > 0
+                ? `Reenviar en ${secondsRemaining}s`
+                : "Reenviar enlace"}
+          </button>
+        </form>
+        <Link className="text-link" href={`/ingresar?next=${encodeURIComponent(nextPath)}`}>Usar otro correo</Link>
+      </section>
+    );
+  }
 
   return (
     <form action={formAction} className="auth-form" noValidate>

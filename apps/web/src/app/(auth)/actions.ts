@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import type { z } from "zod";
 
 import type { AuthActionState } from "@/lib/auth/form-state";
+import { getConfiguredSiteUrl } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 function validationState(error: z.ZodError): AuthActionState {
@@ -100,7 +101,7 @@ export async function sendMagicLinkAction(
     return validationState(credentials.error);
   }
 
-  const origin = (await headers()).get("origin");
+  const origin = getConfiguredSiteUrl() ?? (await headers()).get("origin");
   if (!origin) {
     return { message: "No pudimos preparar el enlace. Inténtalo nuevamente." };
   }
@@ -121,7 +122,9 @@ export async function sendMagicLinkAction(
   }
 
   return {
+    email: credentials.data.email,
     message: "Revisa tu correo. El enlace te llevará directamente al juego.",
+    sentAt: Date.now(),
     success: true,
   };
 }

@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Community Manager",
-  description: "Plataforma comunitaria de comparaciones entre pares",
+  description: "Juego comunitario para elegir los mejores nombres de locales de Santiago",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

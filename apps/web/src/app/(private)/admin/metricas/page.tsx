@@ -9,8 +9,31 @@ type ProductEvent = {
   viewer_id: string;
 };
 
+type GameSession = {
+  viewer_id: string;
+};
+
 function utcDay(timestamp: string) {
   return timestamp.slice(0, 10);
+}
+
+type MetricCardProps = {
+  description: string;
+  label: string;
+  target?: string;
+  targetMet?: boolean;
+  value: string | number;
+};
+
+function MetricCard({ description, label, target, targetMet, value }: MetricCardProps) {
+  return (
+    <article className="metric-card">
+      <p className="comparison-status">{label}</p>
+      <h2>{value}</h2>
+      <p>{description}</p>
+      {target ? <p className={`metric-target ${targetMet ? "is-met" : ""}`}>{targetMet ? "Meta alcanzada" : "Meta inicial"}: {target}</p> : null}
+    </article>
+  );
 }
 
 export default async function MetricsPage() {
@@ -23,11 +46,15 @@ export default async function MetricsPage() {
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
   if (profile?.role !== "admin") redirect("/cuenta");
 
-  const { data, error } = await supabase
-    .from("product_events")
-    .select("created_at, event_name, viewer_id")
-    .order("created_at", { ascending: false });
-  const events = (data ?? []) as ProductEvent[];
+  const [eventsQuery, sessionsQuery] = await Promise.all([
+    supabase
+      .from("product_events")
+      .select("created_at, event_name, viewer_id")
+      .order("created_at", { ascending: false }),
+    supabase.from("game_sessions").select("viewer_id"),
+  ]);
+  const events = (eventsQuery.data ?? []) as ProductEvent[];
+  const sessions = (sessionsQuery.data ?? []) as GameSession[];
   const count = (name: ProductEvent["event_name"]) => events.filter((event) => event.event_name === name).length;
   const duelViews = count("duel_viewed");
   const voteCasts = count("vote_cast");
@@ -42,7 +69,10 @@ export default async function MetricsPage() {
   const returningPlayers = [...playerDays.values()].filter((days) => days.size > 1).length;
   const completion = duelViews ? Math.round((voteCasts / duelViews) * 100) : 0;
   const votesPerPlayer = uniquePlayers ? (voteCasts / uniquePlayers).toFixed(1) : "0";
+  const votesPerPlayerNumber = Number(votesPerPlayer);
   const returnRate = uniquePlayers ? Math.round((returningPlayers / uniquePlayers) * 100) : 0;
+  const playersWithRounds = new Set(sessions.map((session) => session.viewer_id)).size;
+  const additionalRounds = Math.max(0, sessions.length - playersWithRounds);
 
   return (
     <main className="admin-page">
@@ -53,14 +83,15 @@ export default async function MetricsPage() {
         <div className="hero-actions"><Link className="button button-secondary" href="/admin/aportes">Revisar locales</Link></div>
       </section>
 
-      {error ? <p className="form-message" role="alert">No pudimos cargar las métricas todavía.</p> : (
-        <section aria-label="Métricas de la prueba" className="review-list">
-          <article><p className="comparison-status">Jugadores</p><h2>{uniquePlayers}</h2><p>Personas que vieron al menos un duelo.</p></article>
-          <article><p className="comparison-status">Duelos vistos</p><h2>{duelViews}</h2><p>Primera vista de cada duelo creado.</p></article>
-          <article><p className="comparison-status">Votos emitidos</p><h2>{voteCasts}</h2><p>{votesPerPlayer} votos por jugador.</p></article>
-          <article><p className="comparison-status">Finalización</p><h2>{completion}%</h2><p>Duelos vistos que terminaron en voto.</p></article>
-          <article><p className="comparison-status">Ranking visto</p><h2>{count("ranking_viewed")}</h2><p>Visitas registradas al ranking público.</p></article>
-          <article><p className="comparison-status">Retorno</p><h2>{returnRate}%</h2><p>{returningPlayers} jugadores volvieron en un día distinto.</p></article>
+      {eventsQuery.error || sessionsQuery.error ? <p className="form-message" role="alert">No pudimos cargar las métricas todavía.</p> : (
+        <section aria-label="Métricas de la prueba" className="metrics-grid">
+          <MetricCard description="Personas que vieron al menos un duelo." label="Jugadores" value={uniquePlayers} />
+          <MetricCard description="Primera vista de cada duelo creado." label="Duelos vistos" value={duelViews} />
+          <MetricCard description={`${votesPerPlayer} votos por jugador.`} label="Votos emitidos" target="≥ 5 por jugador" targetMet={votesPerPlayerNumber >= 5} value={voteCasts} />
+          <MetricCard description="Duelos vistos que terminaron en voto." label="Finalización" target="≥ 70%" targetMet={completion >= 70} value={`${completion}%`} />
+          <MetricCard description="Visitas registradas al ranking público." label="Ranking visto" value={count("ranking_viewed")} />
+          <MetricCard description={`${returningPlayers} jugadores volvieron en un día distinto.`} label="Retorno" target="≥ 20%" targetMet={returnRate >= 20} value={`${returnRate}%`} />
+          <MetricCard description="Rondas iniciadas después de la primera de cada jugador. Señal exploratoria, todavía sin meta." label="Rondas adicionales" value={additionalRounds} />
         </section>
       )}
     </main>

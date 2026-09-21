@@ -49,8 +49,9 @@ export function SubmissionForm({ action }: SubmissionFormProps) {
       <section className="submission-step" aria-labelledby="location-title">
         <div className="step-heading"><span>02</span><div><p className="eyebrow">El lugar</p><h2 id="location-title">Ponlo en el mapa.</h2></div></div>
         <div className="field-group">
-          <label htmlFor="city">Ciudad</label>
-          <input aria-invalid={Boolean(state.fieldErrors?.city)} id="city" maxLength={80} name="city" placeholder="Ej.: Santiago" required />
+          <label htmlFor="city">Comuna</label>
+          <input aria-invalid={Boolean(state.fieldErrors?.city)} id="city" maxLength={80} name="city" placeholder="Ej.: Ñuñoa" required />
+          <p className="field-help">Durante la prueba cerrada todos los locales pertenecen a Santiago.</p>
           {state.fieldErrors?.city ? <p className="field-error">{state.fieldErrors.city}</p> : null}
         </div>
 

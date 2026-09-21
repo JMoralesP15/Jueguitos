@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getPublicEnvironment } from "./env";
+import { getConfiguredSiteUrl, getPublicEnvironment } from "./env";
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -22,5 +22,15 @@ describe("getPublicEnvironment", () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable-test-key");
 
     expect(() => getPublicEnvironment()).toThrow();
+  });
+
+  it("acepta una URL pública estable para enlaces de acceso", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://juego.example.com");
+    expect(getConfiguredSiteUrl()).toBe("https://juego.example.com");
+  });
+
+  it("permite omitir la URL estable durante desarrollo local", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
+    expect(getConfiguredSiteUrl()).toBeNull();
   });
 });
