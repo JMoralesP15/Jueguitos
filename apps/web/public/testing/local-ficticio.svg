@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title description">
+  <title id="title">Local ficticio para pruebas</title>
+  <desc id="description">Ilustración de una fachada imaginaria, sin relación con un negocio real.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7ed"/>
+      <stop offset="1" stop-color="#fed7aa"/>
+    </linearGradient>
+    <linearGradient id="awning" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c2410c"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#sky)"/>
+  <circle cx="680" cy="105" r="54" fill="#fbbf24" opacity=".75"/>
+  <rect x="110" y="160" width="580" height="340" rx="26" fill="#fffdf9" stroke="#7c2d12" stroke-width="10"/>
+  <rect x="150" y="205" width="500" height="95" rx="18" fill="url(#awning)"/>
+  <path d="M150 300h500l-28 62H178z" fill="#fbbf24"/>
+  <rect x="190" y="365" width="180" height="135" rx="14" fill="#bfdbfe" stroke="#7c2d12" stroke-width="8"/>
+  <rect x="430" y="365" width="145" height="135" rx="14" fill="#ffedd5" stroke="#7c2d12" stroke-width="8"/>
+  <circle cx="545" cy="434" r="8" fill="#7c2d12"/>
+  <text x="400" y="255" fill="#fff" font-family="system-ui, sans-serif" font-size="40" font-weight="800" text-anchor="middle">LOCAL FICTICIO</text>
+  <text x="400" y="555" fill="#7c2d12" font-family="system-ui, sans-serif" font-size="24" font-weight="700" text-anchor="middle">DATOS PARA PRUEBAS · NO ES UN NEGOCIO REAL</text>
+</svg>

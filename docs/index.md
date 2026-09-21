@@ -24,6 +24,8 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 
 ## Producto y contratos
 
+- [Catálogo ficticio para pruebas](runbooks/catalogo-ficticio.md)
+
 - [Producto y roadmap](product/README.md)
 - [Roadmap operativo](product/roadmap.md)
 - [Informe de avance técnico — 19 de septiembre de 2026](product/informe-avance-mvp-2026-09-19.md)
