@@ -23,14 +23,24 @@ técnico único sin exponer el correo. La misma pantalla sirve para crear y recu
 
 ## Callback y redirecciones
 
-La aplicación incluye `GET /auth/confirm`, que acepta el `code` o `token_hash` de Supabase, crea la
-cookie de sesión y redirige únicamente a una ruta interna segura.
+La aplicación incluye `/auth/confirm`, que acepta el `token_hash` de un Magic Link (y el `code` de
+los enlaces anteriores). La página no consume el enlace al abrirse: la sesión sólo se crea cuando
+la persona pulsa **Entrar y continuar**. Esto evita que los escáneres automáticos de correo consuman
+el enlace antes de que la persona lo use, y permite completar el acceso desde otro navegador.
 
-La plantilla **Magic Link** debe respetar la dirección enviada por la aplicación:
+La plantilla **Magic link or OTP** debe enviar el hash directamente al callback de la app y conservar
+la ruta de retorno calculada por el formulario. El botón de correo debe usar:
 
 ```html
-{{ .RedirectTo }}
+<a href="{{ .RedirectTo }}&amp;token_hash={{ .TokenHash }}&amp;type=magiclink">
+  Entrar a Community Manager
+</a>
 ```
+
+El callback verifica el `token_hash` mediante `verifyOtp({ type: "magiclink" })` desde una Server
+Action. No reemplazar el enlace con `{{ .RedirectTo }}` solo: ese valor es la dirección de retorno,
+no contiene el token de acceso. Tampoco usar únicamente `{{ .ConfirmationURL }}` para este flujo SSR:
+la ruta estándar de PKCE depende de una cookie temporal del navegador desde el que se pidió el enlace.
 
 Durante desarrollo se autoriza `http://localhost:3000/auth/confirm`. Para la prueba se añade la URL
 HTTPS exacta del Worker sin retirar localhost.

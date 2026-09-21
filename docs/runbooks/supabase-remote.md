@@ -27,6 +27,10 @@
   Incorpora progreso, errores distinguibles, resumen factual y rondas consecutivas.
 - El acceso vigente usa Magic Link. La URL HTTPS del Worker está configurada como Site URL y como
   redirección autorizada; localhost permanece permitido para desarrollo.
+- La plantilla remota **Magic link or OTP** debe coincidir con `docs/auth-contracts.md`: el enlace
+  lleva `token_hash` al callback del Worker y una confirmación explícita completa la sesión. Si se
+  restaura `{{ .ConfirmationURL }}` como único enlace, se reintroduce la dependencia de PKCE entre
+  el navegador que pide el correo y el navegador que lo abre.
 - `apps/web/wrangler.jsonc` conserva con `keep_vars` las variables administradas desde Cloudflare.
   Sin esta opción, un despliegue de Wrangler elimina las variables del panel y el sitio responde 500.
 - Las credenciales públicas de Supabase se leen una sola vez en el servidor y se entregan a los dos
