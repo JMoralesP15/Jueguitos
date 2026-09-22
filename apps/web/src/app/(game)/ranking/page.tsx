@@ -51,6 +51,7 @@ export default async function RankingPage() {
                   alt={`Foto de ${item.name}`}
                   className="ranking-image"
                   name={item.name}
+                  priority={item.rank_position <= 3}
                   sizes="64px"
                   src={item.image_url}
                 />
@@ -58,9 +59,12 @@ export default async function RankingPage() {
                   <h3>{item.name}</h3>
                   <p>{item.city}</p>
                   <strong>Gana el {Math.round(item.win_rate)}% de sus duelos</strong>
+                  <p className="ranking-sample">
+                    Basado en {item.duel_count} {item.duel_count === 1 ? "duelo" : "duelos"}
+                  </p>
                   <details>
                     <summary>Ver detalle</summary>
-                    <p>{Math.round(item.rating)} Elo · {item.duel_count} duelos</p>
+                    <p>{Math.round(item.rating)} Elo</p>
                   </details>
                 </div>
               </li>

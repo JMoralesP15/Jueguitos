@@ -66,6 +66,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
   const [duel, setDuel] = useState<DuelPayload | null>(null);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(() => new Set());
   const [introductionVisible, setIntroductionVisible] = useState(showIntroduction);
+  const [favoriteMessage, setFavoriteMessage] = useState("");
   const [message, setMessage] = useState("");
   const [result, setResult] = useState<DuelVoteResult | null>(null);
   const [roundSummary, setRoundSummary] = useState<RoundSummary | null>(null);
@@ -110,6 +111,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
 
   async function toggleFavorite(itemId: string) {
     const isFavorite = favoriteIds.has(itemId);
+    setFavoriteMessage("");
     setFavoriteIds((current) => {
       const next = new Set(current);
       if (isFavorite) next.delete(itemId);
@@ -126,9 +128,11 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
         else next.delete(itemId);
         return next;
       });
+      setFavoriteMessage("No pudimos actualizar favoritos. Revisa tu conexión e inténtalo de nuevo.");
       return;
     }
 
+    setFavoriteMessage(isFavorite ? "Quitado de tus favoritos." : "Guardado en tus favoritos.");
     await trackProductEvent(supabase, isFavorite ? "favorite_removed" : "favorite_added");
   }
 
@@ -350,7 +354,6 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                   <span className="duel-card-copy">
                     <span className="category-chip">{item.category}</span>
                     <span className="duel-name">{item.name}</span>
-                    <span className="duel-description">Un local de {item.category.toLowerCase()}.</span>
                     <span className="duel-meta">{item.city}</span>
                   </span>
                 </button>
@@ -368,6 +371,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                 ) : null}
                 <button
                   aria-label={favoriteIds.has(item.id) ? `Quitar ${item.name} de favoritos` : `Guardar ${item.name} en favoritos`}
+                  aria-pressed={favoriteIds.has(item.id)}
                   className={`favorite-button${favoriteIds.has(item.id) ? " is-favorite" : ""}`}
                   disabled={status === "voting"}
                   onClick={() => void toggleFavorite(item.id)}
@@ -378,6 +382,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
               </div>
             );
           })}
+          {favoriteMessage ? <p className="favorite-status" role="status">{favoriteMessage}</p> : null}
           {status === "voting" ? <p className="vote-status" role="status">Registrando tu elección…</p> : null}
         </section>
       ) : status === "result" && duel && result ? (
@@ -408,7 +413,6 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                   <div className="result-card-content">
                     <span className="category-chip">{item.category}</span>
                     <span className="duel-name">{item.name}</span>
-                    <span className="duel-description">Un local de {item.category.toLowerCase()}.</span>
                     <span className="duel-meta">{item.city}</span>
                     {item.address ? <span className="duel-meta">{item.address}</span> : null}
                     {item.websiteUrl || item.instagramUrl ? (

@@ -48,30 +48,41 @@ export default async function AccountPage() {
           </div>
         </dl>
 
-        <div className="account-actions">
-          <Link className="button" href="/cuenta/favoritos">
-            Mis favoritos
-          </Link>
-          <Link className="button button-secondary" href="/jugar">
-            Seguir jugando
-          </Link>
-          <Link className="button" href="/aportes">
-            Mis aportes
-          </Link>
-          <Link className="button" href="/comparaciones">
-            Mis comparaciones
-          </Link>
-          {profile?.role === "admin" ? <Link className="button button-secondary" href="/admin/locales">Cargar locales</Link> : null}
-          {profile?.role === "admin" ? <Link className="button button-secondary" href="/admin/aportes">Revisar locales</Link> : null}
-          <Link className="button button-secondary" href="/">
-            Ir al inicio
-          </Link>
-          <form action={signOutAction}>
-            <button className="button" type="submit">
-              Cerrar sesión
-            </button>
-          </form>
-        </div>
+        <nav aria-label="Opciones de cuenta" className="account-navigation">
+          <div className="account-actions account-actions-primary">
+            <Link className="button" href="/jugar">
+              Seguir jugando
+            </Link>
+            <Link className="button button-secondary" href="/cuenta/favoritos">
+              Mis favoritos
+            </Link>
+          </div>
+          <details className="account-more">
+            <summary>Más opciones de cuenta</summary>
+            <div className="account-actions account-actions-secondary">
+              <Link className="button button-secondary" href="/aportes">
+                Mis aportes
+              </Link>
+              <Link className="button button-secondary" href="/comparaciones">
+                Mis comparaciones
+              </Link>
+              {profile?.role === "admin" ? (
+                <Link className="button button-secondary" href="/admin/locales">Cargar locales</Link>
+              ) : null}
+              {profile?.role === "admin" ? (
+                <Link className="button button-secondary" href="/admin/aportes">Revisar locales</Link>
+              ) : null}
+              <Link className="button button-secondary" href="/">
+                Ir al inicio
+              </Link>
+              <form action={signOutAction}>
+                <button className="button button-secondary" type="submit">
+                  Cerrar sesión
+                </button>
+              </form>
+            </div>
+          </details>
+        </nav>
       </section>
     </main>
   );
