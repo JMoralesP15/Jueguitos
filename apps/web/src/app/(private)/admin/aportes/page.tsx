@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import { BusinessImage } from "@/components/business-image";
 import { createClient } from "@/lib/supabase/server";
 
-import { approveSubmissionAction, hideSubmissionAction } from "./actions";
+import { approveAllSubmissionsAction, approveSubmissionAction, hideSubmissionAction } from "./actions";
+import { BulkApproveForm } from "./bulk-approve-form";
 
 type Submission = {
   address: string | null;
@@ -22,7 +23,7 @@ function mapLink(latitude: number, longitude: number) {
   return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=18/${latitude}/${longitude}`;
 }
 
-type AdminSubmissionsPageProps = { searchParams: Promise<{ aprobado?: string; descartado?: string; error?: string }> };
+type AdminSubmissionsPageProps = { searchParams: Promise<{ aprobado?: string; aprobados?: string; descartado?: string; error?: string; pendientes?: string }> };
 
 export default async function AdminSubmissionsPage({ searchParams }: AdminSubmissionsPageProps) {
   const supabase = await createClient();
@@ -64,11 +65,15 @@ export default async function AdminSubmissionsPage({ searchParams }: AdminSubmis
       </section>
 
       {query.aprobado === "1" ? <p className="notice" role="status">El local ya está publicado.</p> : null}
+      {query.aprobados ? <p className="notice" role="status">Publicamos {query.aprobados} solicitud{query.aprobados === "1" ? "" : "es"}{query.pendientes && query.pendientes !== "0" ? `; quedaron ${query.pendientes} pendientes para revisar` : ""}.</p> : null}
       {query.descartado === "1" ? <p className="notice" role="status">El aporte fue descartado.</p> : null}
       {query.error ? <p className="form-message" role="alert">No pudimos completar la revisión. Inténtalo nuevamente.</p> : null}
 
       <section aria-labelledby="pending-title">
-        <h2 id="pending-title">Pendientes ({reviewed.length})</h2>
+        <div className="section-heading-row">
+          <h2 id="pending-title">Pendientes ({reviewed.length})</h2>
+          {reviewed.length ? <BulkApproveForm action={approveAllSubmissionsAction} count={reviewed.length} /> : null}
+        </div>
         {reviewed.length ? (
           <ul className="review-list">
             {reviewed.map((submission) => (

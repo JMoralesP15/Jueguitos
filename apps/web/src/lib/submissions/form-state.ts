@@ -12,6 +12,21 @@ export type SubmissionActionState = {
     websiteUrl?: string;
   };
   message?: string;
+  values?: SubmissionFormValues;
+};
+
+export type SubmissionFormValues = {
+  address: string;
+  category: string;
+  city: string;
+  instagramUrl: string;
+  latitude: string;
+  locationAccuracyMeters: string;
+  locationConfirmed: string;
+  locationSource: string;
+  longitude: string;
+  name: string;
+  websiteUrl: string;
 };
 
 export type SubmissionFormAction = (

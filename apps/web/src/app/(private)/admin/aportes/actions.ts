@@ -23,6 +23,33 @@ function extensionFromPath(path: string) {
   return match?.[1]?.toLowerCase() ?? "jpg";
 }
 
+type PublishableSubmission = { id: string; image_path: string | null };
+
+async function publishSubmission(supabase: Awaited<ReturnType<typeof createClient>>, item: PublishableSubmission) {
+  if (!item.image_path) return false;
+
+  const { data: privateImage, error: downloadError } = await supabase.storage
+    .from("item-submissions")
+    .download(item.image_path);
+  if (downloadError || !privateImage) return false;
+
+  const publicPath = `${item.id}.${extensionFromPath(item.image_path)}`;
+  const uploadOptions = privateImage.type
+    ? { cacheControl: "31536000", contentType: privateImage.type, upsert: false }
+    : { cacheControl: "31536000", upsert: false };
+  const { error: uploadError } = await supabase.storage.from("item-images").upload(publicPath, privateImage, uploadOptions);
+  if (uploadError) return false;
+
+  const { data: publicImage } = supabase.storage.from("item-images").getPublicUrl(publicPath);
+  const { error: updateError } = await supabase
+    .from("items")
+    .update({ image_url: publicImage.publicUrl, status: "active" })
+    .eq("id", item.id)
+    .eq("status", "pending");
+
+  return !updateError;
+}
+
 export async function approveSubmissionAction(itemId: string, formData: FormData): Promise<void> {
   void formData;
   const supabase = await requireAdmin();
@@ -36,26 +63,7 @@ export async function approveSubmissionAction(itemId: string, formData: FormData
     redirect("/admin/aportes?error=no-disponible");
   }
 
-  const { data: privateImage, error: downloadError } = await supabase.storage
-    .from("item-submissions")
-    .download(item.image_path);
-  if (downloadError || !privateImage) redirect("/admin/aportes?error=foto-privada");
-
-  const publicPath = `${item.id}.${extensionFromPath(item.image_path)}`;
-  const uploadOptions = privateImage.type
-    ? { cacheControl: "31536000", contentType: privateImage.type, upsert: false }
-    : { cacheControl: "31536000", upsert: false };
-  const { error: uploadError } = await supabase.storage.from("item-images").upload(publicPath, privateImage, uploadOptions);
-  if (uploadError) redirect("/admin/aportes?error=foto-publica");
-
-  const { data: publicImage } = supabase.storage.from("item-images").getPublicUrl(publicPath);
-  const { error: updateError } = await supabase
-    .from("items")
-    .update({ image_url: publicImage.publicUrl, status: "active" })
-    .eq("id", item.id)
-    .eq("status", "pending");
-
-  if (updateError) redirect("/admin/aportes?error=publicacion");
+  if (!(await publishSubmission(supabase, item))) redirect("/admin/aportes?error=publicacion");
 
   revalidatePath("/admin/aportes");
   revalidatePath("/aportes");
@@ -79,4 +87,25 @@ export async function hideSubmissionAction(itemId: string, formData: FormData): 
   revalidatePath("/admin/aportes");
   revalidatePath("/aportes");
   redirect("/admin/aportes?descartado=1");
+}
+
+export async function approveAllSubmissionsAction(formData: FormData): Promise<void> {
+  void formData;
+  const supabase = await requireAdmin();
+  const { data: pending } = await supabase
+    .from("items")
+    .select("id, image_path")
+    .eq("status", "pending")
+    .order("created_at", { ascending: true });
+
+  let approved = 0;
+  for (const item of (pending ?? []) as PublishableSubmission[]) {
+    if (await publishSubmission(supabase, item)) approved += 1;
+  }
+
+  revalidatePath("/admin/aportes");
+  revalidatePath("/aportes");
+  revalidatePath("/jugar");
+  revalidatePath("/ranking");
+  redirect(`/admin/aportes?aprobados=${approved}&pendientes=${(pending?.length ?? 0) - approved}`);
 }

@@ -20,6 +20,8 @@ Este es el mapa de trabajo del MVP. La documentación vive junto al código y Gi
 - [Decisión: prueba cerrada, rondas y medición](adr/0007-prueba-cerrada-rondas-y-medicion.md)
 - [Decisión: acceso por enlace y resultado de duelo](adr/0008-acceso-por-enlace-y-resultado-de-duelo.md)
 - [Decisión: el juego clasifica locales, no personas](adr/0009-ranking-de-locales-y-continuidad-de-rondas.md)
+- [Decisión: feedback de experiencia y perfil privado](adr/0010-feedback-de-experiencia-y-perfil-privado.md)
+- [Decisión: continuidad y geocodificación de aportes](adr/0011-continuidad-y-geocodificacion-de-aportes.md)
 - [Notas de arquitectura](architecture/README.md)
 
 ## Producto y contratos

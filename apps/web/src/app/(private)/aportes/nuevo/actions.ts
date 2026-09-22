@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { z } from "zod";
 
-import type { SubmissionActionState } from "@/lib/submissions/form-state";
+import type { SubmissionActionState, SubmissionFormValues } from "@/lib/submissions/form-state";
 import { createClient } from "@/lib/supabase/server";
 
 const acceptedPhotoTypes = new Map([
@@ -15,7 +15,28 @@ const acceptedPhotoTypes = new Map([
 ]);
 const maximumPhotoBytes = 5 * 1024 * 1024;
 
-function validationState(error: z.ZodError): SubmissionActionState {
+function formValues(formData: FormData): SubmissionFormValues {
+  const stringValue = (field: string) => {
+    const value = formData.get(field);
+    return typeof value === "string" ? value : "";
+  };
+
+  return {
+    address: stringValue("address"),
+    category: stringValue("category"),
+    city: stringValue("city"),
+    instagramUrl: stringValue("instagramUrl"),
+    latitude: stringValue("latitude"),
+    locationAccuracyMeters: stringValue("locationAccuracyMeters"),
+    locationConfirmed: stringValue("locationConfirmed"),
+    locationSource: stringValue("locationSource"),
+    longitude: stringValue("longitude"),
+    name: stringValue("name"),
+    websiteUrl: stringValue("websiteUrl"),
+  };
+}
+
+function validationState(error: z.ZodError, values: SubmissionFormValues): SubmissionActionState {
   const fieldErrors: SubmissionActionState["fieldErrors"] = {};
 
   for (const issue of error.issues) {
@@ -28,13 +49,14 @@ function validationState(error: z.ZodError): SubmissionActionState {
     }
   }
 
-  return { fieldErrors, message: "Revisa los campos marcados antes de enviar el aporte." };
+  return { fieldErrors, message: "Revisa los campos marcados antes de enviar el aporte.", values };
 }
 
 export async function createBusinessSubmissionAction(
   _previousState: SubmissionActionState,
   formData: FormData,
 ): Promise<SubmissionActionState> {
+  const values = formValues(formData);
   const input = createBusinessSubmissionSchema.safeParse({
     address: formData.get("address"),
     category: formData.get("category"),
@@ -49,19 +71,19 @@ export async function createBusinessSubmissionAction(
     websiteUrl: formData.get("websiteUrl") || undefined,
   });
 
-  if (!input.success) return validationState(input.error);
+  if (!input.success) return validationState(input.error, values);
 
   const photo = formData.get("photo");
   if (!(photo instanceof File) || photo.size === 0) {
-    return { fieldErrors: { photo: "Selecciona una foto del local." }, message: "Falta la foto." };
+    return { fieldErrors: { photo: "Selecciona una foto del local." }, message: "Falta la foto.", values };
   }
 
   const extension = acceptedPhotoTypes.get(photo.type);
   if (!extension) {
-    return { fieldErrors: { photo: "Usa una imagen JPG, PNG o WebP." }, message: "El formato no está permitido." };
+    return { fieldErrors: { photo: "Usa una imagen JPG, PNG o WebP." }, message: "El formato no está permitido.", values };
   }
   if (photo.size > maximumPhotoBytes) {
-    return { fieldErrors: { photo: "La foto debe pesar como máximo 5 MB." }, message: "La foto es demasiado pesada." };
+    return { fieldErrors: { photo: "La foto debe pesar como máximo 5 MB." }, message: "La foto es demasiado pesada.", values };
   }
 
   const supabase = await createClient();
@@ -74,7 +96,7 @@ export async function createBusinessSubmissionAction(
 
   const { data: profile } = await supabase.from("profiles").select("id").eq("id", user.id).maybeSingle();
   if (!profile) {
-    return { message: "Ingresa con una cuenta registrada para aportar un local." };
+    return { message: "Ingresa con una cuenta registrada para aportar un local.", values };
   }
 
   const imagePath = `${user.id}/${crypto.randomUUID()}.${extension}`;
@@ -84,7 +106,7 @@ export async function createBusinessSubmissionAction(
     upsert: false,
   });
 
-  if (uploadError) return { message: "No pudimos subir la foto. Inténtalo otra vez." };
+  if (uploadError) return { message: "No pudimos subir la foto. Inténtalo otra vez.", values };
 
   const { error: submissionError } = await supabase.from("items").insert({
     category: input.data.category,
@@ -106,7 +128,7 @@ export async function createBusinessSubmissionAction(
 
   if (submissionError) {
     await supabase.storage.from("item-submissions").remove([imagePath]);
-    return { message: "No pudimos guardar el aporte. Revisa si ese local ya fue enviado." };
+    return { message: "No pudimos guardar el aporte. Revisa si ese local ya fue enviado.", values };
   }
 
   revalidatePath("/aportes");

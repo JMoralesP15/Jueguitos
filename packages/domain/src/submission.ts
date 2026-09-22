@@ -28,7 +28,10 @@ export const createBusinessSubmissionSchema = z.object({
   category: businessCategorySchema,
   city: z.string().trim().min(2, "Indica una ciudad.").max(80),
   instagramUrl: z.union([
-    z.string().trim().url("Usa un enlace válido de Instagram.").refine((value) => value.startsWith("https://"), "Usa un enlace HTTPS."),
+    z.preprocess(
+      (value) => typeof value === "string" ? value.trim() : value,
+      z.url("Usa un enlace válido de Instagram.").refine((value) => value.startsWith("https://"), "Usa un enlace HTTPS."),
+    ),
     z.literal(""),
   ]).optional(),
   latitude: z.coerce.number().gte(-90).lte(90),
@@ -38,7 +41,10 @@ export const createBusinessSubmissionSchema = z.object({
   longitude: z.coerce.number().gte(-180).lte(180),
   name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres.").max(120),
   websiteUrl: z.union([
-    z.string().trim().url("Usa un enlace válido para la página.").refine((value) => value.startsWith("https://"), "Usa un enlace HTTPS."),
+    z.preprocess(
+      (value) => typeof value === "string" ? value.trim() : value,
+      z.url("Usa un enlace válido para la página.").refine((value) => value.startsWith("https://"), "Usa un enlace HTTPS."),
+    ),
     z.literal(""),
   ]).optional(),
 });

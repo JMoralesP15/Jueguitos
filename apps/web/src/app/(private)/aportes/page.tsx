@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 
+import { SubmissionDraftCleanup } from "./submission-draft-cleanup";
+
 type ContributionsPageProps = { searchParams: Promise<{ enviado?: string }> };
 
 function statusLabel(status: string) {
@@ -38,7 +40,25 @@ export default async function ContributionsPage({ searchParams }: ContributionsP
         <div className="hero-actions"><Link className="button" href="/aportes/nuevo">Agregar un local</Link><Link className="button button-secondary" href="/cuenta">Mi cuenta</Link></div>
       </section>
 
-      {enviado === "1" ? <p className="notice" role="status">Recibimos tu aporte. Quedó en revisión.</p> : null}
+      {enviado === "1" ? (
+        <section aria-live="polite" className="submission-success-card">
+          <div aria-hidden="true" className="submission-success-mark">🎉</div>
+          <div>
+            <p className="eyebrow">¡Aporte recibido!</p>
+            <h2>Tu hallazgo ya está ayudando a que crezca Santiago.</h2>
+            <p>Quedó en revisión humana. Cuando se apruebe, aparecerá en los duelos para que otras personas lo descubran.</p>
+            <div className="submission-success-meta">
+              <span>✦ {submissions?.length ?? 1} aporte{(submissions?.length ?? 1) === 1 ? "" : "s"} enviado{(submissions?.length ?? 1) === 1 ? "" : "s"}</span>
+              <span>🔒 Foto privada hasta la aprobación</span>
+            </div>
+            <div className="hero-actions">
+              <Link className="button" href="/jugar">Ir a jugar</Link>
+              <Link className="button button-secondary" href="/aportes/nuevo">Aportar otro local</Link>
+            </div>
+          </div>
+          <SubmissionDraftCleanup />
+        </section>
+      ) : null}
 
       <section aria-labelledby="submission-list-title">
         <h2 id="submission-list-title">Estado de los aportes</h2>
