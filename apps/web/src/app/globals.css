@@ -1365,6 +1365,22 @@ dd {
   min-width: 0;
 }
 
+.duel-card-shell:nth-child(odd) .duel-card {
+  background: linear-gradient(160deg, #fffdf9 0%, #fff7ed 100%);
+}
+
+.duel-card-shell:nth-child(even) .duel-card {
+  background: linear-gradient(160deg, #fffdf9 0%, #eff6ff 100%);
+}
+
+.duel-card-shell:nth-child(odd) .duel-image-wrap {
+  background: #ffedd5;
+}
+
+.duel-card-shell:nth-child(even) .duel-image-wrap {
+  background: #dbeafe;
+}
+
 .category-chip {
   width: fit-content;
   padding: 4px 8px;
