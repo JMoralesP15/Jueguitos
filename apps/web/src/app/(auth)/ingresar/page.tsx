@@ -1,7 +1,11 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { AuthForm } from "../auth-form";
+import { AuthSessionRedirect } from "../auth-session-redirect";
 import { sendMagicLinkAction } from "../actions";
+import { getPublicEnvironment } from "@/lib/env";
+import { createClient } from "@/lib/supabase/server";
 
 type SignInPageProps = {
   searchParams: Promise<{ error?: string; next?: string; origen?: string }>;
@@ -10,6 +14,12 @@ type SignInPageProps = {
 export default async function SignInPage({ searchParams }: SignInPageProps) {
   const { error, next, origen } = await searchParams;
   const nextPath = next?.startsWith("/") && !next.startsWith("//") ? next : "/jugar";
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) redirect(nextPath);
 
   return (
     <main className="auth-page">
@@ -27,6 +37,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
           cuenta nuevamente.
         </p>
       ) : null}
+      <AuthSessionRedirect environment={getPublicEnvironment()} nextPath={nextPath} />
       <AuthForm action={sendMagicLinkAction} nextPath={nextPath} />
     </main>
   );

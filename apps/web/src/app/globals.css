@@ -1481,6 +1481,12 @@ dd {
   color: inherit;
 }
 
+.duel-card-details {
+  display: grid;
+  gap: 4px;
+  padding: 0 18px 14px;
+}
+
 .favorite-button {
   position: absolute;
   z-index: 2;

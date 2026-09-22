@@ -352,11 +352,20 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                     <span className="duel-name">{item.name}</span>
                     <span className="duel-description">Un local de {item.category.toLowerCase()}.</span>
                     <span className="duel-meta">{item.city}</span>
-                    {item.address || item.websiteUrl || item.instagramUrl ? (
-                      <span className="duel-links">Ver ficha del local ↓</span>
-                    ) : null}
                   </span>
                 </button>
+                {item.address || item.websiteUrl || item.instagramUrl ? (
+                  <div className="duel-card-details" aria-label={`Datos de ${item.name}`}>
+                    {item.address ? <span className="duel-meta">📍 {item.address}</span> : null}
+                    {item.websiteUrl || item.instagramUrl ? (
+                      <span className="duel-links">
+                        {item.websiteUrl ? <a href={item.websiteUrl} onClick={() => void trackProductEvent(supabase, "external_link_clicked", duel.duel_id)} rel="noreferrer" target="_blank">Web</a> : null}
+                        {item.websiteUrl && item.instagramUrl ? " · " : null}
+                        {item.instagramUrl ? <a href={item.instagramUrl} onClick={() => void trackProductEvent(supabase, "external_link_clicked", duel.duel_id)} rel="noreferrer" target="_blank">Instagram</a> : null}
+                      </span>
+                    ) : null}
+                  </div>
+                ) : null}
                 <button
                   aria-label={favoriteIds.has(item.id) ? `Quitar ${item.name} de favoritos` : `Guardar ${item.name} en favoritos`}
                   className={`favorite-button${favoriteIds.has(item.id) ? " is-favorite" : ""}`}
