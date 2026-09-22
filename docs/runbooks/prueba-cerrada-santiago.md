@@ -40,6 +40,9 @@ autoriza un piloto público.
 - Compartir el enlace sólo por mensaje directo.
 - No corregir el ranking manualmente ni modificar votos.
 - Revisar aportes al menos una vez por día y aprobar sólo los que tengan foto y ubicación válidas.
+- Para cargar locales reales de forma acumulativa, usar `/admin/locales`. Cada registro queda
+  pendiente, la foto se guarda en el bucket privado y el lote se puede exportar desde **Exportar
+  lote CSV**. Después, publicar desde `/admin/aportes` sólo los registros verificados.
 - Registrar comentarios cualitativos: qué confundió, qué dio risa, si entendió que elegía nombres de
   locales y si volvería a jugar.
 

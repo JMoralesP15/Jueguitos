@@ -61,6 +61,7 @@ export default async function AccountPage() {
           <Link className="button" href="/comparaciones">
             Mis comparaciones
           </Link>
+          {profile?.role === "admin" ? <Link className="button button-secondary" href="/admin/locales">Cargar locales</Link> : null}
           {profile?.role === "admin" ? <Link className="button button-secondary" href="/admin/aportes">Revisar locales</Link> : null}
           <Link className="button button-secondary" href="/">
             Ir al inicio

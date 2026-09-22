@@ -60,7 +60,7 @@ export default async function AdminSubmissionsPage({ searchParams }: AdminSubmis
         <p className="eyebrow">Administración · MVP-004b</p>
         <h1>Revisar locales</h1>
         <p className="lede">Aprueba sólo nombres, fotos y ubicaciones que representen correctamente un local real.</p>
-        <div className="hero-actions"><Link className="button button-secondary" href="/admin/metricas">Ver métricas</Link><Link className="button button-secondary" href="/cuenta">Volver a mi cuenta</Link></div>
+        <div className="hero-actions"><Link className="button button-secondary" href="/admin/locales">Cargar locales</Link><Link className="button button-secondary" href="/admin/metricas">Ver métricas</Link><Link className="button button-secondary" href="/cuenta">Volver a mi cuenta</Link></div>
       </section>
 
       {query.aprobado === "1" ? <p className="notice" role="status">El local ya está publicado.</p> : null}
