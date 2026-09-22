@@ -6,7 +6,6 @@ export const productEventNames = [
   "next_round_started",
   "favorite_added",
   "favorite_removed",
-  "item_details_opened",
   "external_link_clicked",
   "profile_updated",
 ] as const;

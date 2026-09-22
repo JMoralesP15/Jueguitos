@@ -16,7 +16,6 @@ La aplicación registra, sin correo ni nombre, estos eventos:
 - `round_completed`
 - `next_round_started`
 - `favorite_added` / `favorite_removed`
-- `item_details_opened`
 - `external_link_clicked`
 - `profile_updated`
 - `ranking_viewed`
