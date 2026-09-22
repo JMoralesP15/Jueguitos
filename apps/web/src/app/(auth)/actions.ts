@@ -107,6 +107,10 @@ export async function sendMagicLinkAction(
   }
 
   const supabase = await createClient();
+  await supabase.rpc("record_auth_event", {
+    p_event_name: "magic_link_requested",
+    p_outcome: "started",
+  });
   const callback = new URL("/auth/confirm", origin);
   callback.searchParams.set("next", credentials.data.next);
   const { error } = await supabase.auth.signInWithOtp({
@@ -118,8 +122,18 @@ export async function sendMagicLinkAction(
   });
 
   if (error) {
+    await supabase.rpc("record_auth_event", {
+      p_error_code: error.code,
+      p_event_name: "magic_link_failed",
+      p_outcome: "error",
+    });
     return { message: "No pudimos enviar el enlace. Espera un momento e inténtalo nuevamente." };
   }
+
+  await supabase.rpc("record_auth_event", {
+    p_event_name: "magic_link_sent",
+    p_outcome: "success",
+  });
 
   return {
     email: credentials.data.email,

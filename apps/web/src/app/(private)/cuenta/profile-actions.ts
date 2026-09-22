@@ -42,6 +42,10 @@ export async function updateDisplayNameAction(
     return { message: "No pudimos guardar el nombre. Inténtalo nuevamente." };
   }
 
+  await supabase.rpc("record_product_event", {
+    p_event_name: "profile_updated",
+    p_duel_id: null,
+  });
   revalidatePath("/cuenta");
   revalidatePath("/jugar");
   return { message: "Nombre guardado. Solo se muestra dentro de tu cuenta.", success: true };

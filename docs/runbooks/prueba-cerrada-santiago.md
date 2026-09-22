@@ -21,16 +21,18 @@ autoriza un piloto público.
    la introducción por cuenta, parejas únicas y porcentajes.
 3. Aplicar `20260921000000_refine_p0_rounds.sql` para activar progreso, estados distinguibles y
    rondas consecutivas. No aplicar la interfaz nueva antes de esta migración.
-4. Desplegar el Worker y anotar su URL HTTPS estable `workers.dev`. Configurar esa misma URL como
+4. Aplicar `20260922000000_add_retention_event_tracking.sql` para registrar continuidad,
+   favoritos, perfil y resultados de Magic Link sin almacenar datos personales.
+5. Desplegar el Worker y anotar su URL HTTPS estable `workers.dev`. Configurar esa misma URL como
    `NEXT_PUBLIC_SITE_URL` en Cloudflare.
-5. En Supabase Auth, configurar esa URL como **Site URL** y URL de retorno autorizada. Probar el
+6. En Supabase Auth, configurar esa URL como **Site URL** y URL de retorno autorizada. Probar el
    Magic Link con el proveedor de correo incorporado antes de invitar.
-6. Probar desde un teléfono: solicitar enlace, abrirlo, ver la introducción sólo una vez, recargar un
+7. Probar desde un teléfono: solicitar enlace, abrirlo, ver la introducción sólo una vez, recargar un
    duelo, completar una ronda, iniciar otra sin espera, comprobar que una pareja no se repite, aportar
    un local, confirmarlo en el mapa, aprobarlo como admin y comprobarlo en juego y ranking.
-7. Confirmar que una pareja con menos de cinco votos no muestre porcentaje y que una con cinco o más
+8. Confirmar que una pareja con menos de cinco votos no muestre porcentaje y que una con cinco o más
    sí lo muestre.
-8. Confirmar que `/admin/metricas` muestra los conteos de duelo, voto y ranking, además del retorno
+9. Confirmar que `/admin/metricas` muestra los conteos de duelo, voto y ranking, además del retorno
    en días distintos.
 
 ## Durante la prueba

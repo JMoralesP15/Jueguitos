@@ -41,7 +41,10 @@ export function AuthForm({ action, nextPath = "/jugar" }: AuthFormProps) {
         <p className="eyebrow">Enlace enviado</p>
         <h1 id="email-sent-title">Revisa tu correo</h1>
         <p className="lede">Enviamos el acceso a <strong>{state.email}</strong>. El enlace te llevará directamente al juego.</p>
-        <p className="field-help">Si no aparece en unos minutos, revisa spam. El enlace vence por seguridad.</p>
+        <p className="field-help">
+          Abre el enlace más reciente en este mismo navegador. Si no aparece en unos minutos, revisa
+          spam; los enlaces anteriores dejan de ser válidos por seguridad.
+        </p>
         <form action={formAction}>
           <input name="email" type="hidden" value={state.email} />
           <input name="next" type="hidden" value={nextPath} />

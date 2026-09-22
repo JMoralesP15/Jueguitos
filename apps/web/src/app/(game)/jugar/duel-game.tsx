@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { BusinessImage } from "@/components/business-image";
+import { trackProductEvent } from "@/lib/analytics/events";
 import type { PublicEnvironment } from "@/lib/env";
 import { createClient } from "@/lib/supabase/client";
 
@@ -125,7 +126,10 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
         else next.delete(itemId);
         return next;
       });
+      return;
     }
+
+    await trackProductEvent(supabase, isFavorite ? "favorite_removed" : "favorite_added");
   }
 
   const loadRoundSummary = useCallback(async () => {
@@ -153,6 +157,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
     if (error?.code === "P0003") {
       setDuel(null);
       await loadRoundSummary();
+      await trackProductEvent(supabase, "round_completed");
       setStatus("roundComplete");
       return;
     }
@@ -209,6 +214,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
 
     if (user) {
       await supabase.from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
+      await trackProductEvent(supabase, "introduction_completed");
     }
   }
 
@@ -253,6 +259,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
       return;
     }
 
+    await trackProductEvent(supabase, "next_round_started");
     await loadNextDuel();
   }
 
@@ -397,9 +404,9 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                     {item.address ? <span className="duel-meta">{item.address}</span> : null}
                     {item.websiteUrl || item.instagramUrl ? (
                       <span className="duel-links">
-                        {item.websiteUrl ? <a href={item.websiteUrl} rel="noreferrer" target="_blank">Web</a> : null}
+                        {item.websiteUrl ? <a href={item.websiteUrl} onClick={() => void trackProductEvent(supabase, "external_link_clicked", duel.duel_id)} rel="noreferrer" target="_blank">Web</a> : null}
                         {item.websiteUrl && item.instagramUrl ? " · " : null}
-                        {item.instagramUrl ? <a href={item.instagramUrl} rel="noreferrer" target="_blank">Instagram</a> : null}
+                        {item.instagramUrl ? <a href={item.instagramUrl} onClick={() => void trackProductEvent(supabase, "external_link_clicked", duel.duel_id)} rel="noreferrer" target="_blank">Instagram</a> : null}
                       </span>
                     ) : null}
                     {showCommunityResult ? <strong>{itemResult.percentage}%</strong> : null}

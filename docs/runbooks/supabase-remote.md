@@ -44,6 +44,10 @@
   `items.instagram_url`, ambas reservadas para enlaces HTTPS verificados. Las consultas fueron
   idempotentes; los archivos fuente son `20260921020000_add_private_favorites.sql` y
   `20260921030000_add_public_item_links.sql`.
+- La instrumentación de retención y diagnóstico de Magic Link está en
+  `20260922000000_add_retention_event_tracking.sql`. Amplía `product_events`, crea el RPC
+  `record_product_event` y la tabla administrativa `auth_events`. Aplicarla una sola vez antes de
+  usar `/admin/metricas` para revisar el embudo de acceso y continuidad.
 - La aplicación ya no inicia sesiones anónimas. El proveedor anónimo puede desactivarse manualmente
   en Supabase una vez terminada la comprobación de cuentas existentes.
 

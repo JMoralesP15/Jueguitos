@@ -5,8 +5,30 @@ import { createClient } from "@/lib/supabase/server";
 
 type ProductEvent = {
   created_at: string;
-  event_name: "duel_viewed" | "ranking_viewed" | "vote_cast";
+  event_name:
+    | "duel_viewed"
+    | "ranking_viewed"
+    | "vote_cast"
+    | "introduction_completed"
+    | "round_completed"
+    | "next_round_started"
+    | "favorite_added"
+    | "favorite_removed"
+    | "item_details_opened"
+    | "external_link_clicked"
+    | "profile_updated";
   viewer_id: string;
+};
+
+type AuthEvent = {
+  created_at: string;
+  event_name:
+    | "magic_link_requested"
+    | "magic_link_sent"
+    | "magic_link_failed"
+    | "magic_link_confirmed"
+    | "magic_link_confirmation_failed";
+  outcome: "started" | "success" | "error";
 };
 
 type GameSession = {
@@ -46,15 +68,17 @@ export default async function MetricsPage() {
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
   if (profile?.role !== "admin") redirect("/cuenta");
 
-  const [eventsQuery, sessionsQuery] = await Promise.all([
+  const [eventsQuery, sessionsQuery, authEventsQuery] = await Promise.all([
     supabase
       .from("product_events")
       .select("created_at, event_name, viewer_id")
       .order("created_at", { ascending: false }),
     supabase.from("game_sessions").select("viewer_id"),
+    supabase.from("auth_events").select("created_at, event_name, outcome"),
   ]);
   const events = (eventsQuery.data ?? []) as ProductEvent[];
   const sessions = (sessionsQuery.data ?? []) as GameSession[];
+  const authEvents = (authEventsQuery.data ?? []) as AuthEvent[];
   const count = (name: ProductEvent["event_name"]) => events.filter((event) => event.event_name === name).length;
   const duelViews = count("duel_viewed");
   const voteCasts = count("vote_cast");
@@ -83,7 +107,7 @@ export default async function MetricsPage() {
         <div className="hero-actions"><Link className="button button-secondary" href="/admin/aportes">Revisar locales</Link></div>
       </section>
 
-      {eventsQuery.error || sessionsQuery.error ? <p className="form-message" role="alert">No pudimos cargar las métricas todavía.</p> : (
+      {eventsQuery.error || sessionsQuery.error || authEventsQuery.error ? <p className="form-message" role="alert">No pudimos cargar las métricas todavía.</p> : (
         <section aria-label="Métricas de la prueba" className="metrics-grid">
           <MetricCard description="Personas que vieron al menos un duelo." label="Jugadores" value={uniquePlayers} />
           <MetricCard description="Primera vista de cada duelo creado." label="Duelos vistos" value={duelViews} />
@@ -92,6 +116,9 @@ export default async function MetricsPage() {
           <MetricCard description="Visitas registradas al ranking público." label="Ranking visto" value={count("ranking_viewed")} />
           <MetricCard description={`${returningPlayers} jugadores volvieron en un día distinto.`} label="Retorno" target="≥ 20%" targetMet={returnRate >= 20} value={`${returnRate}%`} />
           <MetricCard description="Rondas iniciadas después de la primera de cada jugador. Señal exploratoria, todavía sin meta." label="Rondas adicionales" value={additionalRounds} />
+          <MetricCard description="Solicitudes que terminaron en un enlace enviado." label="Magic Link enviados" value={authEvents.filter((event) => event.event_name === "magic_link_sent").length} />
+          <MetricCard description="Errores al solicitar o confirmar un enlace. Revisar antes de invitar más personas." label="Fallos de acceso" value={authEvents.filter((event) => event.outcome === "error").length} />
+          <MetricCard description="Confirmaciones exitosas que crearon una sesión." label="Accesos confirmados" value={authEvents.filter((event) => event.event_name === "magic_link_confirmed").length} />
         </section>
       )}
     </main>

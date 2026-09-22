@@ -22,6 +22,18 @@ export async function confirmMagicLinkAction(formData: FormData) {
       ? await supabase.auth.exchangeCodeForSession(code)
       : { error: new Error("Missing authentication token") };
 
-  if (error) redirect("/ingresar?error=confirmacion");
+  if (error) {
+    await supabase.rpc("record_auth_event", {
+      p_error_code: "code" in error ? error.code : undefined,
+      p_event_name: "magic_link_confirmation_failed",
+      p_outcome: "error",
+    });
+    redirect("/ingresar?error=confirmacion");
+  }
+
+  await supabase.rpc("record_auth_event", {
+    p_event_name: "magic_link_confirmed",
+    p_outcome: "success",
+  });
   redirect(nextPath);
 }
