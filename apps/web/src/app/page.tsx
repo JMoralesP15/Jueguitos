@@ -51,7 +51,7 @@ export default async function HomePage() {
             <p>Inténtalo de nuevo en un momento o explora el ranking público.</p>
             <Link className="text-link" href="/ranking">Abrir el ranking</Link>
           </div>
-        ) : featuredItems.length === 2 ? (
+        ) : featuredItems.length >= 2 ? (
           <div className="home-preview" aria-label="Ejemplos de locales que puedes descubrir">
             <div className="home-preview-heading">
               <span className="home-preview-kicker">Fichas reales</span>
