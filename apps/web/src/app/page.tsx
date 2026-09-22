@@ -60,7 +60,7 @@ export default async function HomePage() {
               </span>
             </div>
             <div className="home-preview-grid">
-              {featuredItems.map((item, index) => (
+              {featuredItems.slice(0, 2).map((item, index) => (
                 <article className={`home-preview-card home-preview-card-${index + 1}`} key={item.id}>
                   <BusinessImage
                     alt={`Foto de ${item.name}`}
