@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const COMMUNITY_VOTE_THRESHOLD = 5;
+
 export const businessItemSchema = z.object({
   address: z.string().trim().max(200).nullable().optional(),
   category: z.string().trim().min(2).max(80),

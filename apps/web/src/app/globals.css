@@ -106,7 +106,7 @@ a {
   padding: 10px 16px;
   border: 1px solid var(--accent-strong);
   border-radius: 999px;
-  color: #ffffff;
+  color: #1c0d08;
   background: linear-gradient(135deg, var(--accent), #f97316);
   font: inherit;
   font-weight: 700;
@@ -135,13 +135,14 @@ a:focus-visible {
 }
 
 .button-secondary {
-  color: var(--accent);
+  color: var(--accent-strong);
   border-color: #fdba74;
   background: var(--accent-soft);
 }
 
 .button-danger {
   border-color: #b91c1c;
+  color: #ffffff;
   background: #b91c1c;
 }
 
@@ -249,7 +250,7 @@ select[aria-invalid="true"] {
 }
 
 .duel-card:focus-visible {
-  outline: 3px solid #80aee5;
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -1091,7 +1092,7 @@ dd {
 .result-card-content strong {
   margin-top: 5px;
   color: var(--accent-strong);
-  font-size: clamp(1.55rem, 7vw, 2.6rem);
+  font-size: 1.05rem;
   line-height: 1;
 }
 
@@ -1136,7 +1137,12 @@ dd {
 }
 
 .preference-second {
-  background: var(--sunshine);
+  background: var(--violet);
+}
+
+.ranking-early {
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .early-result {
@@ -1876,12 +1882,12 @@ dd {
   box-shadow: 0 18px 34px rgb(72 34 17 / 11%);
 }
 
-.home-step-card-vote {
+.home-step-card-2 {
   border-color: #d7c8ff;
   background: #fbf8ff;
 }
 
-.home-step-card-results {
+.home-step-card-3 {
   border-color: #c4defd;
   background: #f6faff;
 }
@@ -1896,32 +1902,22 @@ dd {
   background: linear-gradient(135deg, #ffe1bd, #fff1dc);
 }
 
-.home-step-art::before,
-.home-step-art::after {
-  position: absolute;
-  width: 110px;
-  height: 110px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  content: "";
-  opacity: 0.15;
-}
-
 .home-step-art::before {
-  transform: translate(-24px, 20px);
-}
-
-.home-step-art::after {
-  width: 145px;
-  height: 145px;
-  transform: translate(22px, -5px);
-}
-
-.home-step-art svg {
+  position: absolute;
   z-index: 1;
-  width: 112px;
-  height: 94px;
-  filter: drop-shadow(0 5px 2px rgb(67 33 17 / 9%));
+  inset: 0;
+  background: linear-gradient(135deg, currentColor 0%, transparent 100%);
+  content: "";
+  opacity: 0.27;
+}
+
+.home-step-photo {
+  position: absolute !important;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .home-step-art > span {
@@ -1942,21 +1938,21 @@ dd {
   font-weight: 850;
 }
 
-.home-step-card-vote .home-step-art {
+.home-step-card-2 .home-step-art {
   color: #7545db;
   background: linear-gradient(135deg, #e9dcff, #f7eeff);
 }
 
-.home-step-card-vote .home-step-art > span {
+.home-step-card-2 .home-step-art > span {
   background: #7040d0;
 }
 
-.home-step-card-results .home-step-art {
+.home-step-card-3 .home-step-art {
   color: #2476d2;
   background: linear-gradient(135deg, #d8eaff, #edf6ff);
 }
 
-.home-step-card-results .home-step-art > span {
+.home-step-card-3 .home-step-art > span {
   background: #236dc3;
 }
 
@@ -2150,11 +2146,6 @@ dd {
 
   .home-step-art {
     min-height: 108px;
-  }
-
-  .home-step-art svg {
-    width: 88px;
-    height: 78px;
   }
 
   .home-step-copy {

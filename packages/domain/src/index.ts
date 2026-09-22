@@ -15,6 +15,7 @@ export {
 } from "./comparison";
 
 export {
+  COMMUNITY_VOTE_THRESHOLD,
   businessItemSchema,
   castDuelVoteSchema,
   duelPayloadSchema,

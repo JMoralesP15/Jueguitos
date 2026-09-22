@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  COMMUNITY_VOTE_THRESHOLD,
   castDuelVoteSchema,
   duelPayloadSchema,
   duelVoteResultSchema,
@@ -34,8 +35,6 @@ type DuelGameProps = {
   showIntroduction: boolean;
   userId: string;
 };
-
-const COMMUNITY_THRESHOLD = 5;
 
 function orderedItems(duel: DuelPayload | null): BusinessItem[] {
   if (!duel) return [];
@@ -291,7 +290,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
   }
 
   const totalVotes = result ? result.first_votes + result.second_votes : 0;
-  const showCommunityResult = totalVotes >= COMMUNITY_THRESHOLD;
+  const showCommunityResult = totalVotes >= COMMUNITY_VOTE_THRESHOLD;
   const selectedResult = duel && result && selectedItemId
     ? resultForItem(duel, result, selectedItemId)
     : null;
@@ -452,7 +451,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
               </div>
             </div>
           ) : (
-            <p className="early-result">Mostraremos el porcentaje cuando esta pareja alcance {COMMUNITY_THRESHOLD} votos.</p>
+            <p className="early-result">Mostraremos el porcentaje cuando esta pareja alcance {COMMUNITY_VOTE_THRESHOLD} votos.</p>
           )}
 
           <button className="button button-wide" onClick={() => void loadNextDuel()} type="button">

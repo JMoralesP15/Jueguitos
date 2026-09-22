@@ -1,3 +1,4 @@
+import { COMMUNITY_VOTE_THRESHOLD } from "@mvp/domain";
 import Link from "next/link";
 
 import { BusinessImage } from "@/components/business-image";
@@ -16,6 +17,8 @@ type RankingItem = {
   rating: number;
   win_rate: number;
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function RankingPage() {
   const environment = getPublicEnvironment();
@@ -58,7 +61,11 @@ export default async function RankingPage() {
                 <div className="ranking-copy">
                   <h3>{item.name}</h3>
                   <p>{item.city}</p>
-                  <strong>Gana el {Math.round(item.win_rate)}% de sus duelos</strong>
+                  {item.duel_count >= COMMUNITY_VOTE_THRESHOLD ? (
+                    <strong>Gana el {Math.round(item.win_rate)}% de sus duelos</strong>
+                  ) : (
+                    <strong className="ranking-early">Recién sumando votos</strong>
+                  )}
                   <p className="ranking-sample">
                     Basado en {item.duel_count} {item.duel_count === 1 ? "duelo" : "duelos"}
                   </p>
