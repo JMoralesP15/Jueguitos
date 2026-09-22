@@ -88,9 +88,27 @@ export default async function HomePage() {
         <p className="eyebrow">Así de simple</p>
         <h2 id="how-title">Mira. Elige. Descubre el resultado.</h2>
         <div className="home-steps">
-          <article><span>01</span><h3>Conoce los locales</h3><p>Revisa su rubro, comuna, foto y datos disponibles.</p></article>
-          <article><span>02</span><h3>Elige un nombre</h3><p>Vota por el que te llame más la atención.</p></article>
-          <article><span>03</span><h3>Sigue jugando</h3><p>Mira la tendencia y pasa al siguiente duelo.</p></article>
+          <article className="home-step-card home-step-card-discover">
+            <div className="home-step-art" aria-hidden="true">
+              <svg viewBox="0 0 96 80" fill="none"><path d="M18 59c0-16 13-29 29-29s29 13 29 29v8H18v-8Z" fill="currentColor" opacity=".16"/><path d="M28 56c0-10 8-19 19-19s19 9 19 19v8H28v-8Z" fill="currentColor" opacity=".26"/><circle cx="48" cy="29" r="15" fill="white"/><path d="M59 40 76 57" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/><circle cx="48" cy="29" r="10" stroke="currentColor" strokeWidth="4"/><path d="M43 29h10M48 24v10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/></svg>
+              <span>01</span>
+            </div>
+            <div className="home-step-copy"><h3>Conoce los locales</h3><p>Fotos, rubros y comunas para descubrirlos de verdad.</p></div>
+          </article>
+          <article className="home-step-card home-step-card-vote">
+            <div className="home-step-art" aria-hidden="true">
+              <svg viewBox="0 0 96 80" fill="none"><path d="M48 8 54 25l18 1-14 11 5 18-15-10-15 10 5-18-14-11 18-1 6-17Z" fill="currentColor" opacity=".2"/><path d="m48 15 5 12 13 1-10 8 3 13-11-7-11 7 3-13-10-8 13-1 5-12Z" fill="currentColor"/><path d="m32 61 10 7 6-5 6 5 10-7" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><path d="M28 55h40" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/></svg>
+              <span>02</span>
+            </div>
+            <div className="home-step-copy"><h3>Elige tu favorito</h3><p>Un toque basta para votar por el nombre que te conquista.</p></div>
+          </article>
+          <article className="home-step-card home-step-card-results">
+            <div className="home-step-art" aria-hidden="true">
+              <svg viewBox="0 0 96 80" fill="none"><path d="M17 60h62" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/><path d="M25 58V43h13v15M43 58V30h13v28M61 58V19h13v39" fill="currentColor" opacity=".25"/><path d="M25 43h13v15H25zM43 30h13v28H43zM61 19h13v39H61z" stroke="currentColor" strokeWidth="3"/><path d="m24 33 18-9 12 2 17-14" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M64 12h8v8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <span>03</span>
+            </div>
+            <div className="home-step-copy"><h3>Descubre la tendencia</h3><p>Mira cómo cambia el ranking y sigue con otro duelo.</p></div>
+          </article>
         </div>
         <div className="home-contribute">
           <p>¿Conoces un local con un nombre inolvidable?</p>

@@ -70,6 +70,10 @@ export function AuthForm({ action, nextPath = "/jugar" }: AuthFormProps) {
         <p className="lede">
           Escribe tu correo y te enviaremos un enlace seguro. No necesitas crear una contraseña.
         </p>
+        <p className="field-help">
+          Es necesario confirmar el primer acceso desde el correo. Después, este navegador debería
+          mantener tu sesión; si vuelves a ver esta pantalla, la sesión no se conservó o venció.
+        </p>
       </div>
 
       {state.message ? (
