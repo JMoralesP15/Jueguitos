@@ -16,7 +16,7 @@ Una cuenta registrada puede enviar:
   longitude: number;
   locationSource: "device" | "manual";
   locationConfirmed: true;
-  photo: File;       // JPG, PNG o WebP; máximo 5 MB
+  photo: File;       // imagen propia/autorizada del letrero, con el nombre legible; JPG, PNG o WebP, máximo 5 MB
 }
 ```
 
@@ -37,3 +37,7 @@ La persona puede buscar una dirección usando comuna, calle y numeración, usar 
 con permiso del navegador o tocar el mapa para corregir el pin. La búsqueda de dirección se
 considera una selección manual y nunca reemplaza la confirmación explícita del punto. La
 ubicación sólo se publica al aprobar el local.
+
+La revisión humana confirma que el letrero mostrado corresponda al nombre registrado y pueda leerse
+en la foto antes de publicar. Este flujo puntúa nombres; una respuesta «no lo conozco» pertenece a
+un posible modo futuro para comparar o descubrir locales y no se mezcla con estos votos.

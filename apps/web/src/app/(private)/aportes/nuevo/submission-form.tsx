@@ -99,9 +99,9 @@ export function SubmissionForm({ action }: SubmissionFormProps) {
       <section className="submission-step photo-step" aria-labelledby="photo-title">
         <div className="step-heading"><span>03</span><div><p className="eyebrow">La foto</p><h2 id="photo-title">Muéstranos su personalidad.</h2></div></div>
         <div className="field-group photo-dropzone">
-          <label htmlFor="photo">Elige una foto propia del local</label>
+          <label htmlFor="photo">Elige una foto donde se lea el letrero</label>
           <input accept="image/jpeg,image/png,image/webp" aria-invalid={Boolean(state.fieldErrors?.photo)} id="photo" name="photo" required type="file" />
-          <p className="field-help">JPG, PNG o WebP; máximo 5 MB. Sube sólo imágenes que tengas derecho a usar. Si aparece un error, los demás datos quedarán guardados; sólo tendrás que volver a elegir la foto.</p>
+          <p className="field-help">El nombre del letrero debe verse con claridad: esa es la parte que la gente votará. JPG, PNG o WebP; máximo 5 MB. Sube sólo imágenes que tengas derecho a usar. Si aparece un error, los demás datos quedarán guardados; sólo tendrás que volver a elegir la foto.</p>
           {state.fieldErrors?.photo ? <p className="field-error">{state.fieldErrors.photo}</p> : null}
         </div>
       </section>

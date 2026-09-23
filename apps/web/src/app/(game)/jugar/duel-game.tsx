@@ -305,12 +305,12 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
       {duel ? (
         <header className="game-header" aria-labelledby="game-title">
           <div>
-          <div>
-            <p className="game-kicker">{displayName ? `¡Vamos, ${displayName}!` : "Elige tu favorito"}</p>
-            <p className="game-kicker game-kicker-subtitle">¿Cuál local te da más ganas de conocer?</p>
-          </div>
-            <h1 className="visually-hidden" id="game-title">Duelo de nombres de locales</h1>
-            <p className="game-progress-label">Duelo {duel.round_position} de {duel.round_size}</p>
+            <div className="game-heading-copy">
+              <p className="game-kicker">{displayName ? `¡Vamos, ${displayName}!` : "Duelo de nombres"}</p>
+              <h1 id="game-title">¿Qué nombre te llama más?</h1>
+              <p className="game-kicker-subtitle">Fíjate en el letrero, el rubro y la comuna. Tu voto es por el nombre.</p>
+            </div>
+            <p className="game-progress-label">{duel.round_position} de {duel.round_size}</p>
           </div>
           <div
             aria-label={`Duelo ${duel.round_position} de ${duel.round_size}`}
@@ -334,6 +334,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
               <div className="duel-card-shell" key={item.id}>
                 <button
                   aria-pressed={selected}
+                  aria-label={`Votar por el nombre ${item.name}, ${item.category}, ${item.city}`}
                   className={`duel-card${selected ? " is-selected" : ""}${dimmed ? " is-dimmed" : ""}`}
                   disabled={status === "voting"}
                   onClick={() => void castVote(item.id)}
@@ -341,7 +342,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                 >
                   <span className="duel-image-wrap">
                     <BusinessImage
-                      alt={`Fachada o letrero de ${item.name}`}
+                      alt={`Foto del letrero de ${item.name}`}
                       className="duel-image"
                       name={item.name}
                       priority={index < 2}
@@ -386,7 +387,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
         </section>
       ) : status === "result" && duel && result ? (
         <section aria-live="polite" aria-labelledby="result-title" className="duel-result">
-          <div aria-hidden="true" className="vote-celebration">✦ ¡Voto guardado! ✦</div>
+          <div aria-hidden="true" className="vote-celebration">✦ Preferencia registrada</div>
           <div className="result-heading">
             <p className="eyebrow">Voto registrado</p>
             <h2 id="result-title">{resultMessage}</h2>
@@ -400,7 +401,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
                 <article className={`result-card${selected ? " is-selected" : ""}`} key={item.id}>
                   <span className="duel-image-wrap">
                     <BusinessImage
-                      alt={`Fachada o letrero de ${item.name}`}
+                      alt={`Foto del letrero de ${item.name}`}
                       className="duel-image"
                       name={item.name}
                       priority={index < 2}
@@ -460,7 +461,7 @@ export function DuelGame({ displayName, environment, showIntroduction, userId }:
         </section>
       ) : status === "roundComplete" ? (
         <section aria-live="polite" className="round-summary">
-          <div aria-hidden="true" className="round-confetti">🎉 ✨ 🎊</div>
+          <div aria-hidden="true" className="round-confetti">✦</div>
           <p className="eyebrow">Ronda completada</p>
           <h1>{roundSummary ? `Tomaste ${roundSummary.votes_cast} decisiones.` : "Completaste la ronda."}</h1>
           <p className="lede">Tus votos ya actualizaron el ranking de los locales. Puedes seguir jugando sin esperar.</p>

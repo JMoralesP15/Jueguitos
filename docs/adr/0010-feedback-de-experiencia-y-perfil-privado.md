@@ -23,6 +23,11 @@ contexto inmediato. El esquema existente no tiene campos de web o redes sociales
 - Las tarjetas muestran categoría junto a nombre y comuna para que la persona entienda qué tipo de
   local está comparando. Dirección y enlaces sólo se mostrarán cuando exista información real
   revisada; la prueba sintética no generará ubicaciones ni redes ficticias.
+- La comparación principal puntúa el nombre. La foto del duelo debe mostrar un letrero legible con
+  ese nombre; la persona que aporta o administra la ficha debe elegir una foto propia o autorizada,
+  y la moderación confirma que el letrero se pueda leer antes de publicar.
+- «No lo conozco» queda reservado para un posible modo futuro que compare o ayude a descubrir los
+  locales; no se mezcla con el modo actual de puntuar nombres.
 - Cada voto recibe una señal visual breve y completar una ronda tiene una celebración ligera. No se
   inventan puntos del jugador, rachas ni una posición personal. Las animaciones respetan
   `prefers-reduced-motion`.

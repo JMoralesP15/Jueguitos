@@ -61,9 +61,9 @@ export function LocalForm({ action }: LocalFormProps) {
       </div>
 
       <div className="field-group photo-dropzone">
-        <label htmlFor="admin-local-photo">Fotografía del local</label>
+        <label htmlFor="admin-local-photo">Foto del letrero con el nombre visible</label>
         <input accept="image/jpeg,image/png,image/webp" aria-invalid={Boolean(state.fieldErrors?.photo)} id="admin-local-photo" name="photo" required type="file" />
-        <p className="field-help">JPG, PNG o WebP; máximo 5 MB. Usa fotos propias o con autorización.</p>
+        <p className="field-help">El letrero debe permitir leer el nombre que se comparará. JPG, PNG o WebP; máximo 5 MB. Usa fotos propias o con autorización.</p>
         {state.fieldErrors?.photo ? <p className="field-error">{state.fieldErrors.photo}</p> : null}
       </div>
 

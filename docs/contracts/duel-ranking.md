@@ -20,9 +20,10 @@ permite mantener la sesión, evitar votos repetidos y medir uso de forma pseudó
 }
 ```
 
-Cada tarjeta del juego muestra foto, nombre, categoría y comuna. El campo técnico sigue llamándose
-`city` para no cambiar el modelo de datos durante el P0. Las direcciones y redes sólo se presentan
-cuando son datos reales revisados; no se fabrican para el catálogo de prueba.
+Cada tarjeta del juego muestra una foto del letrero donde se lea el nombre, el nombre del local,
+categoría y comuna. La foto debe permitir evaluar el nombre sin abrir enlaces externos. El campo
+técnico sigue llamándose `city` para no cambiar el modelo de datos durante el P0. Las direcciones y
+redes sólo se presentan cuando son datos reales revisados; no se fabrican para el catálogo de prueba.
 
 ## Ronda de juego
 
