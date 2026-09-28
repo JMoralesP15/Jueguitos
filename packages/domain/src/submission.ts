@@ -49,5 +49,34 @@ export const createBusinessSubmissionSchema = z.object({
   ]).optional(),
 });
 
+const researchUrlSchema = z.preprocess(
+  (value) => typeof value === "string" ? value.trim() : value,
+  z.url().refine((value) => value.startsWith("https://"), "Usa un enlace HTTPS."),
+);
+export const businessResearchCategories = [
+  "Bar, pub y cervecería",
+  "Cafetería y pastelería",
+  "Panadería",
+  "Peluquería y barbería",
+] as const;
+const businessResearchCategorySchema = z.enum(businessResearchCategories);
+
+export const businessResearchCandidateSchema = z.object({
+  address: z.string().trim().min(5).max(200),
+  addressSourceUrl: researchUrlSchema,
+  category: businessResearchCategorySchema,
+  city: z.string().trim().min(2).max(80),
+  instagramUrl: researchUrlSchema.optional(),
+  instagramSourceUrl: researchUrlSchema.optional(),
+  name: z.string().trim().min(2).max(120),
+  notes: z.string().trim().max(500).optional(),
+  sourceUrl: researchUrlSchema,
+  websiteUrl: researchUrlSchema.optional(),
+  websiteSourceUrl: researchUrlSchema.optional(),
+});
+
+export const businessResearchBatchSchema = z.array(businessResearchCandidateSchema).min(1).max(50);
+
 export type BusinessCategory = z.infer<typeof businessCategorySchema>;
 export type CreateBusinessSubmission = z.infer<typeof createBusinessSubmissionSchema>;
+export type BusinessResearchCandidate = z.infer<typeof businessResearchCandidateSchema>;

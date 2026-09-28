@@ -48,6 +48,7 @@ export default async function AdminLocalesPage() {
         <h1>Cargar locales reales</h1>
         <p className="lede">Agrega locales de a uno. Quedarán privados y pendientes hasta que los revises y publiques.</p>
         <div className="hero-actions">
+          <Link className="button button-secondary" href="/admin/locales/investigacion">Investigar lote de hasta 50</Link>
           <a className="button button-secondary" download href="/admin/locales/export">Exportar lote CSV</a>
           <Link className="button button-secondary" href="/admin/aportes">Revisar y publicar</Link>
           <Link className="text-link" href="/cuenta">Volver a mi cuenta</Link>

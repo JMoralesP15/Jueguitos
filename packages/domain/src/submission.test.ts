@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createBusinessSubmissionSchema } from "./submission";
+import { businessResearchBatchSchema, createBusinessSubmissionSchema } from "./submission";
 
 describe("createBusinessSubmissionSchema", () => {
   it("accepts a normalized business contribution", () => {
@@ -56,5 +56,29 @@ describe("createBusinessSubmissionSchema", () => {
         name: "Café del Barrio",
       }).success,
     ).toBe(false);
+  });
+});
+
+describe("businessResearchBatchSchema", () => {
+  const candidate = {
+    name: "Café de prueba",
+    category: "Cafetería y pastelería",
+    city: "Ñuñoa",
+    address: "Av. Italia 1234, Ñuñoa",
+    sourceUrl: "https://example.com/local",
+    addressSourceUrl: "https://example.com/contacto",
+  };
+
+  it("accepts sourced candidate drafts for the four selected business types", () => {
+    expect(businessResearchBatchSchema.parse([candidate])).toHaveLength(1);
+  });
+
+  it("requires HTTPS sources and rejects unrelated business categories", () => {
+    expect(businessResearchBatchSchema.safeParse([{ ...candidate, sourceUrl: "http://example.com" }]).success).toBe(false);
+    expect(businessResearchBatchSchema.safeParse([{ ...candidate, category: "Restaurante" }]).success).toBe(false);
+  });
+
+  it("caps each imported list at fifty records", () => {
+    expect(businessResearchBatchSchema.safeParse(Array.from({ length: 51 }, (_, index) => ({ ...candidate, name: `Local ${String(index)}` }))).success).toBe(false);
   });
 });

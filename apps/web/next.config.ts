@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   reactStrictMode: true,
+  experimental: {
+    serverActions: { bodySizeLimit: "6mb" },
+  },
   poweredByHeader: false,
   transpilePackages: ["@mvp/domain"],
 };

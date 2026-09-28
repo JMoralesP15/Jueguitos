@@ -25,6 +25,9 @@ export {
 } from "./duel";
 
 export {
+  businessResearchCategories,
+  businessResearchBatchSchema,
+  businessResearchCandidateSchema,
   businessCategories,
   businessCategorySchema,
   createBusinessSubmissionSchema,
@@ -40,4 +43,4 @@ export type {
   DuelVoteResult,
   RoundSummary,
 } from "./duel";
-export type { BusinessCategory, CreateBusinessSubmission } from "./submission";
+export type { BusinessCategory, BusinessResearchCandidate, CreateBusinessSubmission } from "./submission";
